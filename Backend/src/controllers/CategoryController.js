@@ -1,12 +1,12 @@
-import TransactionService from "../services/TransactionService.js";
+import CategoryService from '../services/CategoryService.js'
 
-class TransactionController {
+class CategoryController{
     async list(req, res){
         try{
-            const transiction = await TransactionService.list()
-            return res.status(200).json(transiction)
+            const categorys = await CategoryService.list()
+            return res.status(200).json(categorys)
         }catch(erro){
-            res.status(500).json({
+            return res.status(500).json({
                 success: false,
                 message: erro.message
             })
@@ -15,10 +15,10 @@ class TransactionController {
     async listId(req, res){
         try{
             const {id} = req.params
-            const transiction = await TransactionService.listId(id)
-            return res.status(200).json(transiction)
+            const category = await CategoryService.listId(id)
+            return res.status(200).json(category)
         }catch(erro){
-            res.status(500).json({
+            return res.status(500).json({
                 success: false,
                 message: erro.message
             })
@@ -26,10 +26,10 @@ class TransactionController {
     }
     async create(req, res){
         try{
-            await TransactionService.create(req.body)
+            await CategoryService.create(req.body)
             return res.status(200).json({
                 success: true,
-                message: "Transação cadastrada com sucesso"
+                message: 'Categoria cadastrada com sucesso'
             })
         }catch(erro){
             return res.status(500).json({
@@ -41,10 +41,10 @@ class TransactionController {
     async update(req, res){
         try{
             const {id} = req.params
-            await TransactionService.toUpdate(id, req.body)
+            await CategoryService.toUpdate(id, req.body)
             return res.status(200).json({
                 success: true,
-                message: 'Transação atualizada com sucesso'
+                message: 'Categoria atualizada com sucesso'
             })
         }catch(erro){
             return res.status(500).json({
@@ -56,10 +56,9 @@ class TransactionController {
     async delete(req, res){
         try{
             const {id} = req.params
-            await TransactionService.delete(id)
-            res.status(200).json({
+            return res.status(200).json({
                 success: true,
-                message: 'Transação deletada com sucesso'
+                message: 'Categoria atualizada com sucesso'
             })
         }catch(erro){
             return res.status(500).json({
@@ -69,4 +68,4 @@ class TransactionController {
         }
     }
 }
-export default new TransactionController()
+export default new CategoryController()

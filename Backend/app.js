@@ -1,7 +1,7 @@
 import './src/config/env.js'
 import router from './src/routes/index.js'
 import express from 'express'
-import './src/models/Transaction.js'
+import './src/models/index.js'
 import {connection} from './src/config/database.js'
 
 const app = express()
@@ -15,7 +15,7 @@ async function startServer() {
         app.use(router)
         app.listen(9000)
     }catch(erro){
-        console.log("Erro ao iniciar a API")
+        console.log("Erro ao iniciar a API", erro)
     }
 }
 startServer()

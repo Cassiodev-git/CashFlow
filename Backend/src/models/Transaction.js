@@ -20,9 +20,13 @@ const Transaction = connection.define("Transaction", {
         type: DataTypes.STRING,
         allowNull: false
     },
-    category: {
-        type: DataTypes.STRING,
-        allowNull: false
+    CategoryId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'Category',
+            key: 'id'
+        }
     },
     date: {
         type: DataTypes.DATE,

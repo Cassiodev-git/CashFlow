@@ -1,12 +1,22 @@
+import Category from "../models/Category.js";
 import Transaction from "../models/Transaction.js";
 
 class TransactionRepository {
     async list(){
-        return Transaction.findAll()
+        return Transaction.findAll({
+            include:{
+                model: Category,
+                as: 'category'
+            }
+        })
     }
     async listId(id){
         return Transaction.findOne({
-            where: {id}
+            where: {id},
+            include:{
+                model: Category,
+                as: 'category'
+            }
         })
     }
     async create(data){
