@@ -1,23 +1,20 @@
-import { Transaction } from "../models";
-import User from "../models/User";
+import  Transaction  from "../models/Transaction.js";
+import User from "../models/User.js";
 
 class UserRepository {
     async list(){
-        return User.finOne({
+        return User.findAll({
             include: {
                 model: Transaction,
                 as: 'transactions'
-            }
+            },
+            attributes: {exclude:['password']}
         })
     }
     async listId(id){
         return User.findOne({
-            where: {id}
-        })
-    }
-    async listEmail(email){
-        return User.findOne({
-            where: {email}
+            where: {id},
+            attributes: {exclude: ['password']}
         })
     }
     async create(data){

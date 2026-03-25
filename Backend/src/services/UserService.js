@@ -1,4 +1,5 @@
 import UserRepository from "../repository/UserRepository.js"
+import TokenService from "./TokenService.js"
 import bcrypt from "bcrypt"
 class UserService {
     async create(data){
@@ -13,26 +14,26 @@ class UserService {
             message: "Usuário cadastrado com sucesso"
         }
     }
-    async login(email, password){
-        const user = await UserRepository.listEmail(email)
+    async login(data){
+        const user = await UserRepository.listId(data.id)
+        
         if(!user){
             return {
                 success: false,
-                message: "Credencias inválidas"
+                message: "Usuário não encontrado"
             }
         }
-        const valiPassoword = await bcrypt.compare(password, user.password)
-        if(valiPassoword){
-            return {
-                success: true,
-                id: user.id,
-                email: user.email
-            }
-        }else{
+        const validPassoword = await bcrypt.compare(data.password, user.password)
+        if(!validPassoword){
             return {
                 success: false,
-                message: "Credencias inválidas"
+                message: "Credenciais inválidas"
             }
+        }
+        const token = await TokenService.generateToken(user)
+        return {
+            success: true,
+            token: token
         }
     }
     async list(){
@@ -55,25 +56,12 @@ class UserService {
             data: user
         }
     }
-    async findByEmail(email){
-        const user = await UserRepository.listEmail(email)
-        if(!user){
-            return {
-                success: false,
-                message: "Usuário não encontrado"
-            }
-        }
-        return{
-            success: true,
-            data: user
-        }
-    }
     async update(id, data){
         const user = await UserRepository.listId(id)
         if(!user){
             return{
                 success: false,
-                message: "Usuário não encontrado"
+                message: "Credencias invalidas"
             }
         }
         await UserRepository.toUpdate(id, data)

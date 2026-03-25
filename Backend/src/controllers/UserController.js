@@ -23,18 +23,6 @@ class UserController {
             })
         }
     }
-    async findByEmail(req, res){
-        try{
-            const {email} = req.body
-            const user = await UserService.findByEmail(email)
-            return res.status(200).json(user)
-        }catch(erro){
-            return res.status(500).json({
-                success: false,
-                message: "Erro interno no servidor"
-            })
-        }
-    }
     async create(req, res){
         try{
             const result = await UserService.create(req.body)
@@ -71,9 +59,8 @@ class UserController {
         }
     }
     async login(req, res){
-        try{
-            const {email, password} = req.body       
-            const result = await UserService.login(email, password)
+        try{     
+            const result = await UserService.login(req.body)
             return res.status(200).json(result)
         }catch(erro){
             return  res.status(500).json({
