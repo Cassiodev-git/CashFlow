@@ -1,4 +1,4 @@
-export default function validateTransaction(req, res, next) {
+export function validateTransaction(req, res, next) {
 
     const { type, value, description, CategoryId, date } = req.body
 

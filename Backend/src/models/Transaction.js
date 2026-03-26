@@ -31,6 +31,10 @@ const Transaction = connection.define("Transaction", {
     date: {
         type: DataTypes.DATE,
         allowNull: false
+    },
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 
 })

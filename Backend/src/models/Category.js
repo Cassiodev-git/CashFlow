@@ -8,7 +8,7 @@ const Category = connection.define("Category", {
         autoIncrement: true,
         allowNull: false
     },
-    nome: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false
     }

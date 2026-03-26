@@ -15,7 +15,7 @@ class UserService {
         }
     }
     async login(data){
-        const user = await UserRepository.listId(data.id)
+        const user = await UserRepository.listEmail(data.email)
         
         if(!user){
             return {
@@ -48,7 +48,7 @@ class UserService {
         if(!user){
             return {
                 success: false,
-                message: "Usuário não encontrado"
+                message: "Credencias inválidas"
             }
         }
         return {

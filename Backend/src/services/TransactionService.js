@@ -12,8 +12,8 @@ class TransactionService {
         return transaction
     }
     async create(data){
-        const {type, value, description, CategoryId, date} = data
-        if(!type || !value || !description || !CategoryId || !date){
+        const {type, value, description, CategoryId, date,} = data
+        if(!type || !value || !description || !CategoryId || !date ){
             throw new Error("Todos os campos são obrigatórios")
         }
         if(type !== "income" && type !== "expense"){

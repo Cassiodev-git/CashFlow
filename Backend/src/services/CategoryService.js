@@ -12,15 +12,15 @@ class CategoryService{
         return category
     }
     async create(data){
-        const {nome} = data
-        if(!nome){
+        const {name} = data
+        if(!name){
             throw new Error("Nome é obrigatorio")
         }
         return await CategoryRepository.create(data)
     }
     async toUpdate(id, data){
-        const {nome} = data
-        if(!nome){
+        const {name} = data
+        if(!name){
             throw new Error("Nome é obrigatorio")
         }
         return await CategoryRepository.toUpdate(id, data)

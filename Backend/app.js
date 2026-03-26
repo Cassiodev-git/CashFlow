@@ -15,7 +15,7 @@ async function startServer() {
         app.use(router)
         app.listen(9000)
     }catch(erro){
-        console.log("Erro ao iniciar a API", erro)
+        console.log("Erro ao iniciar a API")
     }
 }
 startServer()

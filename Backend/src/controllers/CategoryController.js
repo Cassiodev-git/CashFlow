@@ -8,7 +8,7 @@ class CategoryController{
         }catch(erro){
             return res.status(500).json({
                 success: false,
-                message: erro.message
+                message: "Erro interno no servidor"
             })
         }
     }
@@ -20,7 +20,7 @@ class CategoryController{
         }catch(erro){
             return res.status(500).json({
                 success: false,
-                message: erro.message
+                message: "Erro interno no servidor"
             })
         }
     }
@@ -34,7 +34,7 @@ class CategoryController{
         }catch(erro){
             return res.status(500).json({
                 success: false,
-                message: erro.message
+                message: "Erro interno no servidor"
             })
         }
     }
@@ -49,7 +49,7 @@ class CategoryController{
         }catch(erro){
             return res.status(500).json({
                 success: false,
-                message: erro.message
+                message: "Erro interno no servidor"
             })
         }
     }
@@ -63,7 +63,7 @@ class CategoryController{
         }catch(erro){
             return res.status(500).json({
                 success: false,
-                message: erro.message
+                message: "Erro interno no servidor"
             })
         }
     }

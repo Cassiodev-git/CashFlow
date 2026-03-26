@@ -20,13 +20,18 @@ class TransactionController {
         }catch(erro){
             res.status(500).json({
                 success: false,
-                message: erro.message
+                message: "Erro interno no servidor"
             })
         }
     }
     async create(req, res){
         try{
-            await TransactionService.create(req.body)
+            const userId = req.user.id
+            const newData = {
+                ...req.body,
+                userId
+            }
+            await TransactionService.create(newData)
             return res.status(200).json({
                 success: true,
                 message: "Transação cadastrada com sucesso"
@@ -34,7 +39,7 @@ class TransactionController {
         }catch(erro){
             return res.status(500).json({
                 success: false,
-                message: erro.message
+                message: "Erro interno no servidor"
             })
         }
     }
@@ -49,7 +54,7 @@ class TransactionController {
         }catch(erro){
             return res.status(500).json({
                 success: false,
-                message: erro.message
+                message: "Erro interno no servidor"
             })
         }
     }
@@ -64,7 +69,7 @@ class TransactionController {
         }catch(erro){
             return res.status(500).json({
                 success: false,
-                message: erro.message
+                message: "Erro interno no servidor"
             })
         }
     }

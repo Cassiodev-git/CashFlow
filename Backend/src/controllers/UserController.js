@@ -65,7 +65,7 @@ class UserController {
         }catch(erro){
             return  res.status(500).json({
                 success: false,
-                message: "Erro interno no servidor"
+                message: erro.message
             })
         }
     }

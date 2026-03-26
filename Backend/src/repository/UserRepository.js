@@ -1,3 +1,4 @@
+import { where } from "sequelize";
 import  Transaction  from "../models/Transaction.js";
 import User from "../models/User.js";
 
@@ -14,7 +15,16 @@ class UserRepository {
     async listId(id){
         return User.findOne({
             where: {id},
-            attributes: {exclude: ['password']}
+            attributes: {exclude: ['password']},
+            include: {
+                model: Transaction,
+                as: 'transactions'
+            }
+        })
+    }
+    async listEmail(email){
+        return User.findOne({
+            where: {email},
         })
     }
     async create(data){
