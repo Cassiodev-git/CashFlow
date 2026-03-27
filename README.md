@@ -6,6 +6,7 @@ Este projeto permite registrar receitas e despesas, consultar transações, atua
 
 ## Tecnologias utilizadas
 
+* Bcrypt
 * Node.js
 * Express
 * Sequelize
@@ -16,6 +17,7 @@ Este projeto permite registrar receitas e despesas, consultar transações, atua
 
 ```
 src/
+ ├── middlewares
  ├── controllers
  ├── services
  ├── repositories
@@ -27,11 +29,11 @@ src/
 Arquitetura utilizada:
 
 ```
-Controller → Service → Repository → Model
+Middleware → Controller → Service → Repository → Model
 ```
 
 ## Funcionalidades
-
+* Criar Usuário
 * Criar transação
 * Listar transações
 * Buscar transação por ID
@@ -76,6 +78,8 @@ DB_USER=
 DB_PASSWORD=
 DB_NAME=
 PORT=9000
+JWT_SECRET=
+JWT_EXPIRES=
 ```
 
 ## Executar o projeto
@@ -103,31 +107,31 @@ http://localhost:9000
 Listar transações
 
 ```
-GET /transactions
+GET /Transactions
 ```
 
 Buscar por ID
 
 ```
-GET /transactions/:id
+GET /Transactions/:id
 ```
 
 Criar transação
 
 ```
-POST /transactions
+POST /Transactions
 ```
 
 Atualizar transação
 
 ```
-PUT /transactions/:id
+PUT /Transactions/:id
 ```
 
 Deletar transação
 
 ```
-DELETE /transactions/:id
+DELETE /Transactions/:id
 ```
 
 ## Exemplo de requisição
@@ -139,18 +143,10 @@ Criar transação:
   "type": "expense",
   "value": 150,
   "description": "Compras no mercado",
-  "category": "alimentacao",
+  "CategoryId": "alimentacao",
   "date": "2026-03-15"
 }
 ```
-
-## Melhorias futuras
-
-* Middleware de validação de dados
-* Sistema de usuários
-* Sistema de categorias
-* Dashboard financeiro
-* Autenticação com JWT
 
 ## Licença
 
