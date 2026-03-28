@@ -1,6 +1,7 @@
 import UserRepository from "../repository/UserRepository.js"
 import TokenService from "./TokenService.js"
 import bcrypt from "bcrypt"
+import AppError from "../utils/AppError.js"
 class UserService {
     async create(data){
         const hash = await bcrypt.hash(data.password, 11)
@@ -18,51 +19,30 @@ class UserService {
         const user = await UserRepository.listEmail(data.email)
         
         if(!user){
-            return {
-                success: false,
-                message: "Usuário não encontrado"
-            }
+            throw new AppError("Credencias inválidas", 404)
         }
         const validPassoword = await bcrypt.compare(data.password, user.password)
         if(!validPassoword){
-            return {
-                success: false,
-                message: "Credenciais inválidas"
-            }
+            throw new AppError("Credencias inválidas",400)
         }
         const token = await TokenService.generateToken(user)
-        return {
-            success: true,
-            token: token
-        }
+        return token
     }
     async list(){
         const users = await UserRepository.list()
-        return {
-            success: true,
-            data: users
-        }
+        return users
     }    
     async listId(id){
         const user = await UserRepository.listId(id)
         if(!user){
-            return {
-                success: false,
-                message: "Credencias inválidas"
-            }
+            throw new AppError("Usuário não encontrado", 404)
         }
-        return {
-            success: true,
-            data: user
-        }
+        return user
     }
     async update(id, data){
         const user = await UserRepository.listId(id)
         if(!user){
-            return{
-                success: false,
-                message: "Credencias invalidas"
-            }
+            throw new AppError("Usuário não encontrado", 404)
         }
         await UserRepository.toUpdate(id, data)
         return{
@@ -74,10 +54,7 @@ class UserService {
     async delete(id){
         const user = await UserRepository.listId(id)
         if(!user){
-            return{
-                success: false,
-                message: "Usuário não encontrado"
-            }
+            throw new AppError("Usuário não encontrado", 404)
         }
         await UserRepository.delete(id)
         return{

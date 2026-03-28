@@ -5,8 +5,7 @@ class UserController {
         return res.status(200).json(users)
     }
     async listId(req, res){
-        const {id} =  req.params
-        const user = await UserService.listId(id)
+        const user = await UserService.listId(req.params.id)
         return res.status(200).json(user)
 
     }
@@ -15,13 +14,11 @@ class UserController {
         return res.status(200).json(result)
     }
     async update(req, res){
-        const {id} = req.params
-        const result = await UserService.update(id, req.body)
+        const result = await UserService.update(req.params.id, req.body)
         return res.status(200).json(result)
     }
     async delete(req, res){
-        const {id} = req.params
-        const result = await UserService.delete(id)
+        const result = await UserService.delete(req.params.id)
         return res.status(200).json(result)
     }
     async login(req, res){  

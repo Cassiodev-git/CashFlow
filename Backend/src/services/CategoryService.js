@@ -1,4 +1,5 @@
 import CategoryRepository from '../repository/CategoryRepository.js'
+import AppError from '../utils/AppError.js'
 
 class CategoryService{
     async list(){
@@ -7,28 +8,28 @@ class CategoryService{
     async listId(id){
         const category = await CategoryRepository.listId(id)
         if(!category){
-            throw new Error("Categoria não encontrada")
+            throw new AppError("Categoria não encontrada", 404)
         }
         return category
     }
     async create(data){
         const {name} = data
         if(!name){
-            throw new Error("Nome é obrigatorio")
+            throw new AppError("Nome é obrigatorio", 400)
         }
         return await CategoryRepository.create(data)
     }
     async toUpdate(id, data){
         const {name} = data
         if(!name){
-            throw new Error("Nome é obrigatorio")
+            throw new AppError("Nome é obrigatorio",400)
         }
         return await CategoryRepository.toUpdate(id, data)
     }
     async delete(id){
         const category = await CategoryRepository.listId(id)
         if(!category){
-            throw new Error("Categoria não encontrada")
+            throw new AppError("Categoria não encontrada", 400)
         }
         return await CategoryRepository.delete(id)
     }

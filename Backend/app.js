@@ -5,14 +5,17 @@ import './src/models/index.js'
 import {connection} from './src/config/database.js'
 import userRoute from './src/routes/UserRouter.js'
 import transactionRoute from './src/routes/TransactionRouter.js'
-import {errorMiddleware} from './src/middleware/erroMiddleware.js'
+import welcomeRoute from './src/routes/welcomeRoute.js'
+import {errorMiddleware} from './src/middlewares/erroMiddleware.js'
+
 
 const app = express()
 
 app.use(express.json())
 
-app.use("/User", userRoute)
-app.use("/Transaction", transactionRoute)
+app.use("/users", userRoute)
+app.use("/transactions", transactionRoute)
+app.use("/", welcomeRoute)
 
 app.use((req, res) => {
     return res.status(404).json({

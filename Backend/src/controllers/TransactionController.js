@@ -3,7 +3,6 @@ import TransactionService from "../services/TransactionService.js";
 class TransactionController {
     async list(req, res){
         const transiction = await TransactionService.list()
-        throw new Error("Erro teste")
         return res.status(200).json(transiction)
     }
     async listId(req, res){

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import TransactionController from "../controllers/TransactionController.js";
-import {validateTransaction} from "../middleware/validateTransaction.js";
-import  {authMiddleware} from "../middleware/authMiddleware.js";
+import {validateTransaction} from "../middlewares/validateTransaction.js";
+import  {authMiddleware} from "../middlewares/authMiddleware.js";
 
 const router = Router()
 

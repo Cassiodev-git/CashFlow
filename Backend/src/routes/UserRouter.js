@@ -1,7 +1,7 @@
 import { Router } from "express";
 import UserController from "../controllers/UserController.js";
-import {validateUser} from "../middleware/validateUser.js"
-import {authMiddleware} from "../middleware/authMiddleware.js"
+import {validateUser} from "../middlewares/validateUser.js"
+import {authMiddleware} from "../middlewares/authMiddleware.js"
 
 const router = Router()
 router.post("/login", UserController.login)
