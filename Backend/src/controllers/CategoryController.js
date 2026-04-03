@@ -6,8 +6,7 @@ class CategoryController{
         return res.status(200).json(categorys)
     }
     async listId(req, res){
-        const {id} = req.params
-        const category = await CategoryService.listId(id)
+        const category = await CategoryService.listId(req.params.id)
         return res.status(200).json(category)
     }
     async create(req, res){
@@ -18,18 +17,17 @@ class CategoryController{
         })
     }
     async update(req, res){
-        const {id} = req.params
-        await CategoryService.toUpdate(id, req.body)
+        await CategoryService.toUpdate(req.params.id, req.body)
         return res.status(200).json({
             success: true,
             message: 'Categoria atualizada com sucesso'
         })
     }
     async delete(req, res){
-        const {id} = req.params
+        await CategoryService.delete(req.params.id)
         return res.status(200).json({
             success: true,
-            message: 'Categoria atualizada com sucesso'
+            message: 'Categoria deletada com sucesso'
         })
     }
 }

@@ -6,8 +6,7 @@ class TransactionController {
         return res.status(200).json(transiction)
     }
     async listId(req, res){
-        const {id} = req.params
-        const transiction = await TransactionService.listId(id)
+        const transiction = await TransactionService.listId(req.params.id)
         return res.status(200).json(transiction)
     }
     async create(req, res){
@@ -23,16 +22,14 @@ class TransactionController {
         })
     }
     async update(req, res){
-        const {id} = req.params
-        await TransactionService.toUpdate(id, req.body)
+        await TransactionService.toUpdate(req.params.id, req.body)
         return res.status(200).json({
             success: true,
             message: 'Transação atualizada com sucesso'
         })
     }
     async delete(req, res){
-        const {id} = req.params
-        await TransactionService.delete(id)
+        await TransactionService.delete(req.params.id)
         res.status(200).json({
             success: true,
             message: 'Transação deletada com sucesso'
