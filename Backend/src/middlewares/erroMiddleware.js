@@ -6,6 +6,6 @@ export function errorMiddleware(error, req, res, next) {
         success: false,
         message: isOperational
             ? error.message
-            : "Erro interno do servidor"
+            : "Erro interno no servidor"
     })
 }

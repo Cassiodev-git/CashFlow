@@ -1,11 +1,7 @@
 import './App.css'
-
+import AppRoutes from './routes/AppRoutes'
 function App() {
-  return(
-    <div>
-      <h2>CashFlow front end</h2>
-    </div>
-  )
+  return <AppRoutes/>
 }
 
 export default App
