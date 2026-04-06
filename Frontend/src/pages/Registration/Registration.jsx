@@ -1,30 +1,20 @@
 import "./Registration.css"
 import {Link, useNavigate} from "react-router-dom"
 import {register} from "../../services/authService.js"
-import { useState, useEffect } from "react";
+import { useForm } from "../../hooks/useAuthform.js";
 const Registration = () => {
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState("")
     const navigate = useNavigate()
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        setLoading(true)
-        try{
-            await register({
-                name,
-                email,
-                password,
-            })
-            navigate("/")
-        }catch(err){
-            setError(err.response?.data.message || "Erro ao cadastrar")
-        } finally{
-            setLoading(false)
-        }
+    const { values, handleChange, handleSubmit, loading, error } = useForm(
+    {
+        name: "",
+        email: "",
+        password: ""
+    },
+    async (data) => {
+        await register(data)
+        navigate("/")
     }
+)
     return (
         <div className="login-container">
             <div className="login-card">
@@ -35,24 +25,24 @@ const Registration = () => {
 
                 <div className="input-group">
                     <label>Nome:</label>
-                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Digite seu nome" required />
+                    <input type="text" name="name" value={values.name} onChange={handleChange} placeholder="Digite seu nome" required />
                 </div>
 
                 <div className="input-group">
                     <label>Email:</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Digite seu email" required />
+                    <input type="email" name="email" value={values.email} onChange={handleChange} placeholder="Digite seu email" required />
                 </div>
 
                 <div className="input-group">
                     <label>Senha:</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Digite sua senha" required />
+                    <input type="password" name="password" value={values.password} onChange={handleChange} placeholder="Digite sua senha" required />
                 </div>
                 {error && <p className="error">{error}</p>}
                 <p className="register-link">
                     Você possui conta? <Link to="/">Fazer login</Link>
                 </p>
-                <button type="submit" className="btn-login">
-                    Cadastrar
+                <button type="submit" className="btn-login" disabled={loading}>
+                    {loading ? "Cadastrando...":"Cadastrar"}
                 </button>
                 </form>
             </div>
