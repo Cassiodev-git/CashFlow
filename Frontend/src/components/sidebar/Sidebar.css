@@ -113,6 +113,9 @@
     height: 20px;
     object-fit: contain;
 }
+.line-logo{
+    margin-bottom: 15px;
+}
 
 .sidebar-menu {
     display: flex;

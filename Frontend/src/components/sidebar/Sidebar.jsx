@@ -24,7 +24,7 @@ const Sidebar = () => {
                     <img src={logo} alt="CashFlow Logo" className="logo-img" />
                     <span className="logo-text">Cash<span className="logo-text-sec">Flow</span></span>
                 </div>
-
+                <hr className="line-logo"/>
                 <nav className="sidebar-menu">
                     <NavLink 
                         to="/home" 

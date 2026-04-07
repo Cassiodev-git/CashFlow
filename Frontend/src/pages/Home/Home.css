@@ -1,0 +1,372 @@
+
+.main-content{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+
+    padding:60px 40px;
+
+}
+
+.dashboard-container{
+
+    width:100%;
+    max-width:900px;
+
+    animation:fadeContainer .7s ease;
+
+}
+
+
+
+@keyframes fadeContainer{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+
+
+.top-navbar{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 25px;
+
+    border-radius:14px;
+
+    margin-bottom:30px;
+
+    background:rgba(255,255,255,0.15);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    border:1px solid rgba(255,255,255,0.25);
+
+    box-shadow:
+    0 8px 30px rgba(0,0,0,0.1);
+
+    animation:fadeNavbar .6s ease;
+
+}
+
+.dashboard-title{
+    font-size:26px;
+    font-weight:600;
+    color:#4f5d73;
+
+}
+
+
+
+.navbar-actions{
+
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+}
+
+
+
+.btn-nova{
+
+    width:38px;
+    height:38px;
+
+    border-radius:50%;
+    border:none;
+
+    background:rgba(255,255,255,0.6);
+
+    font-size:20px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    line-height:1;
+
+    transition:all .25s ease;
+
+}
+
+.btn-nova:hover{
+
+    transform:scale(1.08);
+    background:white;
+
+}
+
+
+.perfil-avatar{
+
+    width:38px;
+    height:38px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#cfd9df,#e2ebf0);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-weight:bold;
+
+}
+
+
+.saldo-card{
+
+    background:linear-gradient(135deg,#5dbb8b,#4aa58c);
+
+    border-radius:16px;
+
+    padding:35px;
+
+    color:white;
+
+    margin-bottom:30px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,0.15);
+
+}
+
+.saldo-header{
+
+    font-size:20px;
+
+}
+
+.saldo-valor{
+
+    font-size:46px;
+
+    margin:15px 0;
+
+}
+
+.saldo-info{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:18px;
+
+}
+
+.transacoes-card{
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:30px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,0.1);
+
+}
+
+.transacoes-header{
+
+    font-size:22px;
+
+    margin-bottom:20px;
+
+}
+
+.transacao{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px 0;
+
+    border-bottom:1px solid #eee;
+
+    transition:.25s;
+
+}
+.transacoes-lista{
+
+    max-height:35vh;
+
+    overflow-y:auto;
+
+    padding-right:5px;
+
+}
+
+
+
+.transacoes-lista::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+.transacoes-lista::-webkit-scrollbar-thumb{
+
+    background:#cfcfcf;
+
+    border-radius:10px;
+
+}
+.transacao:last-child{
+
+    border-bottom:none;
+
+}
+
+.transacao:hover{
+
+    background:#f7f7f7;
+
+    padding-left:10px;
+
+    border-radius:8px;
+
+}
+
+.transacao-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+
+
+.titulo{
+
+    font-weight:bold;
+
+}
+
+
+
+.data{
+
+    font-size:13px;
+
+    color:#888;
+
+}
+
+
+.icon{
+
+    width:42px;
+    height:42px;
+
+    border-radius:50%;
+
+}
+
+.icon.entrada{
+
+    background:#4caf50;
+
+}
+
+.icon.saida{
+
+    background:#e53935;
+
+}
+
+
+
+.entrada{
+
+    color:#4caf50;
+    font-weight:bold;
+
+}
+
+.saida{
+
+    color:#e53935;
+    font-weight:bold;
+
+}
+
+
+@media(max-width:768px){
+
+.dashboard-container{
+    max-width:600px;
+}
+
+.saldo-valor{
+    font-size:36px;
+}
+
+}
+
+@media(max-width:480px){
+
+.top-navbar{
+
+    flex-direction:row;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.navbar-actions{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-left:auto;
+
+}
+
+.saldo-info{
+
+    flex-direction:column;
+
+    gap:6px;
+
+}
+
+.transacao{
+
+    flex-direction:row;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+}
