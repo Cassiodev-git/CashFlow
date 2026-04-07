@@ -19,11 +19,11 @@ class UserService {
         const user = await UserRepository.listEmail(data.email)
         
         if(!user){
-            throw new AppError("Credencias inválidas", 404)
+            throw new AppError("Credencias inválidas", 401)
         }
         const validPassoword = await bcrypt.compare(data.password, user.password)
         if(!validPassoword){
-            throw new AppError("Credencias inválidas",400)
+            throw new AppError("Credencias inválidas",401)
         }
         const token = await TokenService.generateToken(user)
         return token

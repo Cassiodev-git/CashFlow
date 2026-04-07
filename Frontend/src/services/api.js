@@ -6,12 +6,11 @@ const api = axios.create({
         "Content-Type": "application/json"
     }
 })
-
 let isRedirecting = false
 
 api.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem("token")
+        const token = localStorage.getItem("token") 
 
         if (token) {
         config.headers = {

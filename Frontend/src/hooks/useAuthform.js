@@ -19,7 +19,8 @@ export const useForm = (initialValues, submitCallback) => {
         try{
             await submitCallback(values)
         }catch(err){
-            setError(err.response?.data?.message || "Erro")
+            const message = err.response?.data?.message || "Erro ao se comunicar com o servidor"
+            setError(message)
         }finally {
             setLoading(false)
         }

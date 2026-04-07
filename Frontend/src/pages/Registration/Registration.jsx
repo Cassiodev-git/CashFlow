@@ -2,8 +2,12 @@ import "./Registration.css"
 import {Link, useNavigate} from "react-router-dom"
 import {register} from "../../services/authService.js"
 import { useForm } from "../../hooks/useAuthform.js";
+import { useToast } from "../../contexts/ToastContext"
+
 const Registration = () => {
     const navigate = useNavigate()
+    const { success } = useToast()
+
     const { values, handleChange, handleSubmit, loading, error } = useForm(
     {
         name: "",
@@ -12,6 +16,7 @@ const Registration = () => {
     },
     async (data) => {
         await register(data)
+        success("Conta criada com sucesso!")
         navigate("/")
     }
 )
