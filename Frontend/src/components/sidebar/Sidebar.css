@@ -77,16 +77,16 @@
 
 .sidebar {
     width: 260px;
-    height: 100vh;
-
+    min-height: 100vh;
+    position: sticky;
+    top: 0;
+    align-self: flex-start; 
+    height: auto;
     background: linear-gradient(180deg, #1c1a2e, #2a2740);
     color: #e4e6ef;
-
     display: flex;
     flex-direction: column;
-
     padding: 24px 18px;
-
     transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 

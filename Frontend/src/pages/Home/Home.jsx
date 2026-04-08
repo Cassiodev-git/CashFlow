@@ -1,5 +1,5 @@
 import "./Home.css";
-
+import Graph from "../../components/graph/graph";
 const Home = () => {
     const transacoes = [
         {
@@ -68,6 +68,7 @@ const Home = () => {
                 </div>
 
                 <div className="saldo-card">
+                
                 <p className="saldo-header">Saldo</p>
 
                 <h1 className="saldo-valor">R$ 2.545,00</h1>
@@ -78,6 +79,7 @@ const Home = () => {
                     <span className="saida">- R$ 1.100,00</span>
                 </div>
                 </div>
+                <Graph/>
                 <div className="transacoes-card">
                 <h2 className="transacoes-header">Últimas Transações</h2>
 
