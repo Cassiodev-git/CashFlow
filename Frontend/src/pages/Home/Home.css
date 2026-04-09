@@ -7,14 +7,14 @@
 
     justify-content:center;
 
-    padding:60px 40px;
+    padding:0px 60px;
 
 }
 
 .dashboard-container{
 
     width:100%;
-    max-width:900px;
+    max-width:1000px;
 
     animation:fadeContainer .7s ease;
 
@@ -65,10 +65,9 @@
 }
 
 .dashboard-title{
-    font-size:26px;
+    font-size:28px;
     font-weight:600;
     color:#4f5d73;
-
 }
 
 
@@ -77,7 +76,7 @@
 
     display:flex;
     align-items:center;
-    gap:15px;
+    gap:18px;
 
 }
 
@@ -218,7 +217,18 @@
     padding-right:5px;
 
 }
+.income {
+    color: #22c55e; 
+}
 
+.expense {
+    color: #ef4444; 
+}
+.sem-transacao{
+    text-align: center;
+    margin-top: 10px;
+    opacity: 0.7;
+}
 
 
 .transacoes-lista::-webkit-scrollbar{
@@ -320,17 +330,27 @@
 @media(max-width:768px){
 
 .dashboard-container{
-    max-width:600px;
+    max-width:700px;
 }
-
+.main-content{
+    padding: 60px 30px;
+}
 .saldo-valor{
-    font-size:36px;
+    font-size:42px;
 }
 
 }
 
 @media(max-width:480px){
-
+.main-content{
+    padding: 50px 20px;
+}
+.saldo-card{
+    padding: 30px;
+}
+.transacoes-card{
+    padding: 25px;
+}
 .top-navbar{
 
     flex-direction:row;

@@ -32,5 +32,12 @@ class TransactionRepository {
             where: {id}
         })
     }
+    async listByUser(id){
+        return await Transaction.findAll({
+            where: {
+                userId: id
+            }
+        })
+    }
 }
 export default new TransactionRepository()

@@ -1,13 +1,8 @@
 import UserService from "../services/UserService.js"
 class UserController {
-    async list(req, res){
-        const users = await UserService.list()
-        return res.status(200).json(users)
-    }
     async listId(req, res){
-        const user = await UserService.listId(req.params.id)
-        return res.status(200).json(user)
-
+        const use = await UserService.listId(req.user.id)
+        return res.status(200).json(use)
     }
     async create(req, res){
         const result = await UserService.create(req.body)

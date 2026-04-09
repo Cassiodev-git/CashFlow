@@ -4,7 +4,7 @@ import Home from "../pages/Home/Home.jsx"
 import Registration from "../pages/Registration/Registration.jsx"
 import ProtectedRoute from "../components/router/ProtectedRoute.jsx"
 import Layout from "../components/layout/Layout.jsx"
-
+import Transactions from "../pages/Transactions/Transactions.jsx"
 const AppRoutes = () => {
     return(
         <BrowserRouter>
@@ -13,6 +13,7 @@ const AppRoutes = () => {
                 <Route path="/register" element={<Registration/>}/>
                 <Route element={<ProtectedRoute><Layout/></ProtectedRoute>}>
                     <Route path="/home" element={<Home/>}/>
+                    <Route path="/transaction" element={<Transactions/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

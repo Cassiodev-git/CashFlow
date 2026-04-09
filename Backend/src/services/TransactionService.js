@@ -2,9 +2,6 @@ import AppError from "../utils/AppError.js";
 import TransactionRepository from "../repository/TransactionRepository.js";
 
 class TransactionService {
-    async list(){
-        return await TransactionRepository.list()
-    }
     async listId(id){
         const transaction = await TransactionRepository.listId(id)
         if(!transaction){
@@ -50,6 +47,25 @@ class TransactionService {
             throw new AppError("Transação não encontrada", 404)
         }
         return await TransactionRepository.delete(id)
+    }
+    async getsummary(id){
+        const transactios = await TransactionRepository.listByUser(id)
+        let entries = 0
+        let said = 0
+        for(const t of transactios){
+            if(t.type === "income"){
+                entries += parseFloat(t.value)
+            }else{
+                said += parseFloat(t.value)
+            }
+        }
+        const sale = entries - said
+
+        return {
+            entries,
+            said,
+            sale
+        }
     }
 }
 export default new TransactionService()

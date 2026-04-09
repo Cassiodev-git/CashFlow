@@ -1,13 +1,13 @@
 import TransactionService from "../services/TransactionService.js";
 
 class TransactionController {
-    async list(req, res){
-        const transiction = await TransactionService.list()
-        return res.status(200).json(transiction)
-    }
     async listId(req, res){
         const transiction = await TransactionService.listId(req.params.id)
         return res.status(200).json(transiction)
+    }
+    async listByUser(req, res){
+        const data =  await TransactionService.getsummary(req.user.id)
+        return res.status(200).json(data)
     }
     async create(req, res){
         const userId = req.user.id
