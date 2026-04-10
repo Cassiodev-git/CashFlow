@@ -2,25 +2,21 @@ import Category from "../models/Category.js";
 import Transaction from "../models/Transaction.js";
 
 class TransactionRepository {
-    async list(){
-        return Transaction.findAll({
-            include:{
-                model: Category,
-                as: 'category'
-            }
-        })
-    }
     async listId(id){
-        return Transaction.findOne({
+        return await Transaction.findOne({
             where: {id},
-            include:{
-                model: Category,
-                as: 'category'
-            }
+            attributes: ["id", "description", "value","type","date"],
+            include: [
+                {
+                    model: Category,
+                    as: "category",
+                    attributes: ["id", "name"]
+                }
+            ]
         })
     }
     async create(data){
-        return Transaction.create(data)
+        return await Transaction.create(data)
     }
     async toUpdate(id, data){
         return Transaction.update(data, {
@@ -28,7 +24,7 @@ class TransactionRepository {
         })
     }
     async delete(id){
-        return Transaction.destroy({
+        return await Transaction.destroy({
             where: {id}
         })
     }

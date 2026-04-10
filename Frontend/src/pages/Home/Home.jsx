@@ -1,14 +1,33 @@
 import "./Home.css";
 import Graph from "../../components/graph/graph";
 import { useData } from "../../hooks/useData";
+import { useTransaction } from "../../hooks/useTransaction";
+import { useState } from "react";
 
 const Home = () => {
-    const { user, loading, error, sale } = useData();
+    const { user, loading, error, sale, reload } = useData(); 
+    const [openForm, setOpenForm] = useState(false);
+
+    const [description, setDescript] = useState("")
+    const [value, setValue] = useState("")
+    const [type, setType] = useState("income")
+    const [date, setDate] = useState("")
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        const data = {
+            description,
+            value: Number(value),
+            type,
+            cate
+        }
+    }
+
 
     if (loading) {
         return <p>Carregando...</p>;
     }
-
     if (error) {
         return <p>Erro: {error}</p>;
     }
@@ -20,7 +39,7 @@ const Home = () => {
                     <h1 className="dashboard-title">Dashboard</h1>
 
                     <div className="navbar-actions">
-                        <button className="btn-nova">+</button>
+                        <button className="btn-nova" onClick={() => setOpenForm(true)}>+</button>
                         <div className="perfil-avatar">C</div>
                     </div>
                 </div>
@@ -37,8 +56,32 @@ const Home = () => {
                         )}
                     </div>
                 </div>
+                {openForm && (
+                    <div className="form-overlay">
+                        <div className="form-container">
+                            <h2>Nova Transação</h2>
+                            <form >
+                                <input type="text" placeholder="Título" />
+                                <input type="number" placeholder="Valor" />
 
-                <Graph />
+                                <select>
+                                    <option value="income">Entrada</option>
+                                    <option value="expense">Saída</option>
+                                </select>
+
+                                <input type="date" />
+
+                                <div className="form-actions">
+                                    <button type="submit">Salvar</button>
+                                    <button type="button" onClick={() => setOpenForm(false)}>
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                )}
+                <Graph entries={sale?.entries} said={sale?.said} />
 
                 <div className="transacoes-card">
                     <h2 className="transacoes-header">Últimas Transações</h2>

@@ -1,42 +1,43 @@
-import { where } from "sequelize";
 import  Transaction  from "../models/Transaction.js";
+import Category from "../models/Category.js"
 import User from "../models/User.js";
 
 class UserRepository {
-    async list(){
-        return User.findAll({
-            include: {
-                model: Transaction,
-                as: 'transactions'
-            },
-            attributes: {exclude:['password']}
-        })
-    }
     async listId(id){
-        return User.findOne({
+        return await User.findOne({
             where: {id},
             attributes: {exclude: ['password']},
-            include: {
-                model: Transaction,
-                as: 'transactions'
-            }
+            include:[
+                {
+                    model: Transaction,
+                    as: "transactions",
+                    attributes: ["id", "description","value","type","date"],
+                    include: [
+                        {
+                            model: Category,
+                            as: "category",
+                            attributes: ["id", "name"]
+                        }
+                    ]
+                }
+            ]
         })
     }
     async listEmail(email){
-        return User.findOne({
+        return await User.findOne({
             where: {email},
         })
     }
     async create(data){
-        return User.create(data)
+        return await User.create(data)
     }
     async toUpdate(id, data){
-        return User.update(data, {
+        return await User.update(data, {
             where: {id}
         })
     }
     async delete(id){
-        return User.destroy({
+        return await User.destroy({
             where: {id}
         })
     }
