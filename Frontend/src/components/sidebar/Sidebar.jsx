@@ -45,10 +45,17 @@ const Sidebar = () => {
                         <img src={Transaction} alt="Transaction" className="logo-img-side"/>
                         Transações
                     </NavLink>
+                    <NavLink
+                        to="/config"
+                        className={({ isActive }) =>
+                            `menu-item ${isActive ? "active" : ""}`
+                        }
                         
-                    <a href="#" className="menu-item">
-                        <img src={Config} alt="CashFlow Logo" className="logo-img-side" /> Configurações
-                    </a>
+                    >
+                        <img src={Transaction} alt="Config" className="logo-img-side"/>
+                        Configuração
+                    </NavLink>
+                
                 </nav>
             </aside>
         </>

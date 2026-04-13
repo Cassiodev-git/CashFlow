@@ -2,28 +2,39 @@ import "./Home.css";
 import Graph from "../../components/graph/graph";
 import { useData } from "../../hooks/useData";
 import { useTransaction } from "../../hooks/useTransaction";
+import {useCategory} from "../../hooks/useCategory"
 import { useState } from "react";
 
 const Home = () => {
     const { user, loading, error, sale, reload } = useData(); 
+    const {createTransaction} = useTransaction()
+    const {categories, loadCategorys, loadingCategory} =  useCategory()
     const [openForm, setOpenForm] = useState(false);
 
     const [description, setDescript] = useState("")
     const [value, setValue] = useState("")
     const [type, setType] = useState("income")
     const [date, setDate] = useState("")
+    const [categoryId, setCategory] = useState("")
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
         const data = {
             description,
             value: Number(value),
+            CategoryId: categoryId,
             type,
-            cate
+            date
         }
+        await createTransaction(data)
+        reload()
+        
+        setDescript("")
+        setValue("")
+        setCategory("")
+        setDate("")
+        
     }
-
 
     if (loading) {
         return <p>Carregando...</p>;
@@ -40,7 +51,7 @@ const Home = () => {
 
                     <div className="navbar-actions">
                         <button className="btn-nova" onClick={() => setOpenForm(true)}>+</button>
-                        <div className="perfil-avatar">C</div>
+                        <div className="perfil-avatar" >C</div>
                     </div>
                 </div>
 
@@ -60,16 +71,29 @@ const Home = () => {
                     <div className="form-overlay">
                         <div className="form-container">
                             <h2>Nova Transação</h2>
-                            <form >
-                                <input type="text" placeholder="Título" />
-                                <input type="number" placeholder="Valor" />
+                            <form  onSubmit={handleSubmit}>
+                                <input type="text" value={description} onChange={(e) => setDescript(e.target.value)} placeholder="Título" />
+                                <input type="number" value={value} onChange={(e) => setValue(e.target.value)}  placeholder="Valor" />
 
-                                <select>
+                                <select value={type} onChange={(e) => setType(e.target.value)}>
                                     <option value="income">Entrada</option>
                                     <option value="expense">Saída</option>
                                 </select>
-
-                                <input type="date" />
+                                <select
+                                    value={categoryId}
+                                    onChange={(e) => setCategory(e.target.value)}
+                                    disabled={loadingCategory}
+                                >
+                                    <option value="" disabled>
+                                        {loadingCategory ? "Carregando..." : "Selecione a categoria"}
+                                    </option>
+                                    {categories.data.map((c) => (
+                                        <option key={c.id} value={c.id}>
+                                            {c.name}
+                                        </option>
+                                    ))}
+                                </select>
+                                <input type="date" value={date} onChange={(e) => setDate(e.target.value)}/>
 
                                 <div className="form-actions">
                                     <button type="submit">Salvar</button>

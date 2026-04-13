@@ -1,25 +1,31 @@
-import { useState } from "react"
-import {category} from "../services/categoryService"
+import { useState, useEffect } from "react"
+import {listCategorys} from "../services/categoryService"
 
 export const useCategory = () => {
-    const [loading, setLoading] = useState(true)
+    const [categories, setCategories] = useState([])
+    const [loadingCategory, setLoading] = useState(true)
     const [error, setError ] = useState(null)
 
-    const listCategory = async () => {
+    const loadCategorys = async () => {
         try{
             setLoading(true)
             setError(null)
-            const res = await category()
-            return res
+            const res = await listCategorys()
+            setCategories(res || [])
         }catch(error){
             setError(error.message)
         }finally{
             setLoading(false)
         }
-        return {
-            listCategory,
-            loading,
+        
+    }
+    useEffect(() => {
+        loadCategorys()
+    }, [])
+    return {
+            loadCategorys,
+            categories,
+            loadingCategory,
             error
         }
-    }
 }

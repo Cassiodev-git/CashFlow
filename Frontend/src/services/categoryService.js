@@ -1,6 +1,6 @@
 import api from "./api"
 
-export const categorys = async () => {
-    const res = api.get("/categorys")
+export const listCategorys = async () => {
+    const res = await api.get("/categorys")
     return res
 }
