@@ -3,7 +3,7 @@ import Transaction from "../models/Transaction.js";
 
 class TransactionRepository {
     async listId(id){
-        return await Transaction.findOne({
+        return await Transaction.findAll({
             where: {id},
             attributes: ["id", "description", "value","type","date"],
             include: [

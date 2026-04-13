@@ -5,6 +5,7 @@ import './src/models/index.js'
 import {connection} from './src/config/database.js'
 import userRoute from './src/routes/UserRouter.js'
 import transactionRoute from './src/routes/TransactionRouter.js'
+import categoryRoute from "./src/routes/CategoryRouter.js"
 import welcomeRoute from './src/routes/welcomeRoute.js'
 import {errorMiddleware} from './src/middlewares/erroMiddleware.js'
 import cors from "cors"
@@ -20,6 +21,7 @@ app.use(cors({
 
 app.use("/users", userRoute)
 app.use("/transactions", transactionRoute)
+app.use("/categorys", categoryRoute)
 app.use("/", welcomeRoute)
 
 app.use((req, res) => {
