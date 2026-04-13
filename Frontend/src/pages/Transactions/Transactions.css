@@ -1,0 +1,281 @@
+
+.transacoes-card {
+    background: #fff;
+    padding: 14px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+}
+
+
+.transacoes-topo {
+    margin-bottom: 10px;
+}
+
+.transacoes-header {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+
+.top-bar {
+    display: flex;
+    gap: 6px;
+}
+
+
+.search-input {
+    flex: 1;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: none;
+    background: #f9f9f9;
+    font-size: 0.85rem;
+    outline: none;
+    transition: 0.2s;
+}
+
+.search-input:focus {
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+}
+
+
+.filter-button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background: #f4f4f4;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: 0.2s;
+}
+
+.filter-button:hover {
+    background: #ececec;
+}
+
+.transacoes-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 2px;
+}
+
+.transacao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    background: #fff;
+    transition: background 0.2s ease;
+}
+
+
+.transacao:hover {
+    background: #f7f7f7;
+}
+
+.transacao-esquerda {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.titulo {
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+.data {
+    font-size: 0.7rem;
+    color: #888;
+}
+
+.valor {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.income {
+    color: #2ecc71;
+}
+
+.expense {
+    color: #e74c3c;
+}
+
+
+.sem-transacao {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-top: 10px;
+}
+
+
+.dashboard-content {
+    display: flex;
+    gap: 15px;
+}
+
+.coluna-principal {
+    flex: 2;
+}
+
+.coluna-lateral {
+    flex: 1;
+    position: sticky;
+    top: 10px;
+}
+
+
+
+.categorias-card {
+    background: #fff;
+    padding: 14px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+}
+
+.categorias-header {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.categorias-top-bar {
+    margin-bottom: 10px;
+}
+
+.categorias-search {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: none;
+    background: #f9f9f9;
+    font-size: 0.85rem;
+    outline: none;
+    transition: 0.2s;
+}
+
+.categorias-search:focus {
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+}
+
+.btn-add {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #f4f4f4;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: 0.2s;
+}
+
+.btn-add:hover {
+    background: #ececec;
+}
+
+
+.categorias-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+
+.categoria {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    background: #fff;
+    transition: background 0.2s ease;
+}
+
+.categoria:hover {
+    background: #f7f7f7;
+}
+
+.categoria-nome {
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+.btn-excluir {
+    border: none;
+    background: transparent;
+    color: #e74c3c;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-excluir:hover {
+    opacity: 0.7;
+}
+
+.sem-categoria {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+
+
+@media (max-width: 900px) {
+    .dashboard-content {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .categoria {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .categorias-lista {
+        max-height: 250px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .transacoes-card {
+        padding: 12px;
+    }
+
+    .top-bar {
+        flex-direction: column;
+    }
+
+    .filter-button {
+        width: 100%;
+    }
+    .transacao {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .transacao-direita {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .transacoes-lista {
+        max-height: 300px;
+    }
+}

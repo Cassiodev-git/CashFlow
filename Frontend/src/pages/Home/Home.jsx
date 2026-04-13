@@ -56,7 +56,7 @@ const Home = () => {
                 </div>
 
                 <div className="saldo-card">
-                    <p className="saldo-header">Saldo</p>
+                    <p className="saldo-header">Saldo Atual</p>
 
                     <h1 className="saldo-valor">R$ {sale?.sale}</h1>
 
