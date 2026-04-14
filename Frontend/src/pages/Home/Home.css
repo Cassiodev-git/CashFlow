@@ -1,14 +1,10 @@
 
 .main-content{
-
     flex:1;
-
     display:flex;
-
     justify-content:center;
-
     padding:0px 60px;
-
+    min-height: calc(100vh - 60px); /* Garante altura mínima adequada */
 }
 
 .dashboard-container{

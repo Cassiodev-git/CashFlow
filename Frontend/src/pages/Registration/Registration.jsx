@@ -1,4 +1,4 @@
-import "./Registration.css"
+import "../Login/Login.css"
 import {Link, useNavigate} from "react-router-dom"
 import {register} from "../../services/authService.js"
 import { useForm } from "../../hooks/useAuthform.js";

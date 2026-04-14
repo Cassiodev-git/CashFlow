@@ -1,4 +1,4 @@
-import "./Home.css";
+import "../Home/Home.css";
 import Graph from "../../components/graph/graph";
 import { useData } from "../../hooks/useData";
 import { useTransaction } from "../../hooks/useTransaction";
