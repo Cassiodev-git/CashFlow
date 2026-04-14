@@ -1,34 +1,34 @@
 import { useEffect, useState } from "react";
 import { userTransactions, saleData } from "../services/userService";
+import { useRequest } from "./useRequest";
 
 export const useData = () => {
-    const [user, setUser] = useState(null)
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
-    const [sale, setSale] = useState("")
 
-    async function fetchData(e) {
-        try{
-            setError(null)
-            setLoading(true)
-            const data = await userTransactions()
-            const sale = await saleData()
-            setUser(data)
-            setSale(sale)
-        }catch(error){
-            setError(error.message)
-        }finally{
-            setLoading(false)
-        }
+    const userRequest = useRequest();
+    const saleRequest = useRequest();
+
+    const [user, setUser] = useState(null);
+    const [sale, setSale] = useState("");
+
+    async function fetchData() {
+        const userData = await userRequest.execute(() => userTransactions());
+        const saleDataRes = await saleRequest.execute(() => saleData());
+
+        if (userData) setUser(userData);
+        if (saleDataRes) setSale(saleDataRes);
     }
+
     useEffect(() => {
-        fetchData()
-    }, [])
+        fetchData();
+    }, []);
+
     return {
         user,
-        loading,
-        error,
         sale,
+
+        loading: userRequest.loading || saleRequest.loading,
+        error: userRequest.error || saleRequest.error,
+
         reload: fetchData
-    }
-}
+    };
+};

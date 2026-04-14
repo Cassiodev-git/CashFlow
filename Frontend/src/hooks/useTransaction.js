@@ -1,44 +1,27 @@
 import { newTransaction, update } from "../services/transactionsService";
-import { useState } from "react";
+import { useRequest } from "./useRequest";
 
 export const useTransaction = () => {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [response, setResponse] = useState("")
+    const {execute, loading, error} = useRequest()
+    const createTransaction = async (data, onSuccess) => {
+        const res = await execute(() => newTransaction(data))
 
-    const createTransaction = async (data) => {
-        try {
-            setLoading(true);
-            setError(null);
-
-            const res = await newTransaction(data);
-            setResponse(res)
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setLoading(false);
-        }
+        if(res && onSuccess) onSuccess()
+        
+        return res
     };
 
     const updateTransaction = async (id, data, onSuccess) => {
-        try {
-            setLoading(true);
-            setError(null);
+        const res = await execute(() => update(id, data))
 
-            const res = await update(id, data);
+        if(res && onSuccess) onSuccess()
 
-            setResponse(res)
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setLoading(false);
-        }
+        return res
     };
 
     return {
         createTransaction,
         updateTransaction,
-        response,
         loading,
         error
     };

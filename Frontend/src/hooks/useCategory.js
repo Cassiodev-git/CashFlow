@@ -1,23 +1,15 @@
 import { useState, useEffect } from "react"
 import {listCategorys} from "../services/categoryService"
+import { useRequest } from "./useRequest"
 
 export const useCategory = () => {
+
     const [categories, setCategories] = useState([])
-    const [loadingCategory, setLoading] = useState(true)
-    const [error, setError ] = useState(null)
+    const categoryRequest = useRequest()
 
     const loadCategorys = async () => {
-        try{
-            setLoading(true)
-            setError(null)
-            const res = await listCategorys()
-            setCategories(res || [])
-        }catch(error){
-            setError(error.message)
-        }finally{
-            setLoading(false)
-        }
-        
+        const categoryData = await categoryRequest.execute(() => listCategorys())
+        if(categoryData) setCategories(categoryData)
     }
     useEffect(() => {
         loadCategorys()
@@ -25,7 +17,7 @@ export const useCategory = () => {
     return {
             loadCategorys,
             categories,
-            loadingCategory,
-            error
+            loading: categoryRequest.loading,
+            error: categoryRequest.error
         }
 }

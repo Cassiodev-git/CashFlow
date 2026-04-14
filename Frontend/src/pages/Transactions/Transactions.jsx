@@ -6,7 +6,7 @@ import {useTransaction} from "../../hooks/useTransaction"
 
 const Transactions = () => {
     const { user, reload } = useData();
-    const {updateTransaction, response, error, loading} = useTransaction()
+    const {updateTransaction} = useTransaction()
     const { categories, loadingCategory } = useCategory();
 
     const [openForm, setOpenForm] = useState(false);
@@ -38,12 +38,12 @@ const Transactions = () => {
             CategoryId: categoryId,
             date: date
         }
-        await updateTransaction(id, data)
-        if(response.data.success){
+        const res = await updateTransaction(id, data)
+        if(res){
             reload()
             setOpenForm(false);
             setSelectedTransaction(null);
-        }
+        }   
     };
     const handleDelete = (id) => {
 
