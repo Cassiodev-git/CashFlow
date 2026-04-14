@@ -1,153 +1,99 @@
-# CashFlow API
+# 💰 CashFlow
 
-API REST para gerenciamento de transações financeiras pessoais.
+Aplicação web de controle financeiro desenvolvida com Node.js e React, permitindo o gerenciamento de transações e categorias de forma prática e organizada.
 
-Este projeto permite registrar receitas e despesas, consultar transações, atualizar registros e remover dados, funcionando como o backend de um gestor financeiro.
+---
 
-## Tecnologias utilizadas
+## 🚀 Funcionalidades
 
-* Bcrypt
-* Node.js
-* Express
-* Sequelize
-* MySQL
-* Dotenv
+- Cadastro e autenticação de usuários (JWT)
+- Gerenciamento de transações (receitas e despesas)
+- Criação e organização de categorias
+- Associação de transações a categorias
+- Listagem de transações por usuário
+- Interface responsiva para visualização dos dados
 
-## Estrutura do projeto
+---
 
-```
-src/
- ├── middlewares
- ├── controllers
- ├── services
- ├── repositories
- ├── models
- ├── routes
- └── config
-```
+## 🧠 Regras de Negócio
 
-Arquitetura utilizada:
+- Um usuário pode possuir múltiplas transações
+- Cada transação está vinculada a uma categoria
+- Apenas usuários autenticados podem acessar e manipular seus dados
 
-```
-Middleware → Controller → Service → Repository → Model
-```
+---
 
-## Funcionalidades
-* Criar Usuário
-* Criar transação
-* Listar transações
-* Buscar transação por ID
-* Atualizar transação
-* Remover transação
+## 🛠️ Tecnologias Utilizadas
 
-Cada transação possui:
+### Backend
+- Node.js
+- Express
+- JWT (autenticação)
+- Sequelize (ORM)
+- MySQL
 
-* type (income ou expense)
-* value
-* description
-* category
-* date
+### Frontend
+- React
+- JavaScript
+- CSS
 
-## Instalação
+---
 
-Clone o repositório:
+## 🧱 Arquitetura
 
-```
-git clone https://github.com/Cassiodev-git/CashFlow.git
-```
+O backend foi estruturado seguindo organização em camadas:
 
-Entre na pasta do projeto:
+- Controllers → controle das requisições
+- Services → regras de negócio
+- Repositories → acesso ao banco de dados
 
-```
-cd cashflow
-```
+---
 
-Instale as dependências:
+## 🔐 Autenticação
 
-```
-npm install
-```
+A aplicação utiliza autenticação baseada em **JWT (JSON Web Token)**, garantindo que apenas usuários autenticados possam acessar e manipular seus dados.
 
-## Configuração do ambiente
+---
 
-Crie um arquivo `.env` na raiz do projeto:
+## 🗄️ Banco de Dados
 
-```
-DB_HOST=
-DB_USER=
-DB_PASSWORD=
-DB_NAME=
-PORT=9000
-JWT_SECRET=
-JWT_EXPIRES=
-```
+Utiliza banco relacional (MySQL) com Sequelize para modelagem das entidades e seus relacionamentos.
 
-## Executar o projeto
+Principais entidades:
 
-Modo desenvolvimento:
+- Usuário
+- Transação
+- Categoria
 
-```
-npm run dev
-```
+---
 
-Ou:
+## 🎯 Objetivo
 
-```
-node app.js
-```
+Projeto desenvolvido com foco em prática de desenvolvimento backend, organização de código e construção de aplicações completas com integração frontend e backend.
 
-A API ficará disponível em:
+---
 
-```
-http://localhost:9000
-```
+## 🚧 Status do Projeto
 
-## Rotas da API
+Em desenvolvimento.
 
-Listar transações
+Atualmente em evolução com foco na página de transações, incluindo:
+- edição e exclusão de transações
+- criação, edição e exclusão de categorias
+- melhorias na organização e usabilidade da interface
 
-```
-GET /Transactions
-```
+---
 
-Buscar por ID
+## 🚀 Melhorias Futuras
 
-```
-GET /Transactions/:id
-```
+- implementação de filtros de transações
+- criação da página de configuração do usuário
+- evolução da aplicação para versão mobile
 
-Criar transação
+---
 
-```
-POST /Transactions
-```
+## 📌 Observações
 
-Atualizar transação
+Projeto desenvolvido com foco em prática real de desenvolvimento backend e frontend, aplicando conceitos como autenticação, organização em camadas e modelagem de dados.
 
-```
-PUT /Transactions/:id
-```
-
-Deletar transação
-
-```
-DELETE /Transactions/:id
-```
-
-## Exemplo de requisição
-
-Criar transação:
-
-```json
-{
-  "type": "expense",
-  "value": 150,
-  "description": "Compras no mercado",
-  "CategoryId": "alimentacao",
-  "date": "2026-03-15"
-}
-```
-
-## Licença
-
-Projeto desenvolvido para fins de estudo.
+A aplicação está em constante evolução, acompanhando meu aprendizado e sendo utilizada como base para consolidar boas práticas e construção de sistemas completos.
