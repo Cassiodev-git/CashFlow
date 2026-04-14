@@ -2,9 +2,11 @@ import "../Transactions/Transactions.css"
 import { useState, useEffect } from "react";
 import { useData } from "../../hooks/useData";
 import { useCategory } from "../../hooks/useCategory";
+import {useTransaction} from "../../hooks/useTransaction"
 
 const Transactions = () => {
-    const { user, loading, error, reload } = useData();
+    const { user, reload } = useData();
+    const {updateTransaction, response, error, loading} = useTransaction()
     const { categories, loadingCategory } = useCategory();
 
     const [openForm, setOpenForm] = useState(false);
@@ -26,22 +28,26 @@ const Transactions = () => {
         }
     }, [selectedTransaction]);
 
-    const handleSubmit = (e, id) => {
+    const handleSubmit = async (e, id) => {
         e.preventDefault();
 
-        console.log("Editar ID:", id);
-        console.log({
-        description,
-        value,
-        type,
-        categoryId,
-        date,
-        });
-
-        setOpenForm(false);
-        setSelectedTransaction(null);
+        const data = {
+            description: description,
+            value: value,
+            type: type,
+            CategoryId: categoryId,
+            date: date
+        }
+        await updateTransaction(id, data)
+        if(response.data.success){
+            reload()
+            setOpenForm(false);
+            setSelectedTransaction(null);
+        }
     };
-    const handleDelete = (id) => {};
+    const handleDelete = (id) => {
+
+    };
 
     return (
         <div className="dashboard-content">
@@ -58,8 +64,6 @@ const Transactions = () => {
                             placeholder="Buscar..."
                             className="search-input"
                         />
-
-                        <button className="filter-button">Filtros</button>
                     </div>
                 </div>
 
