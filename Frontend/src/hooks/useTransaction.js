@@ -1,4 +1,4 @@
-import { newTransaction, update } from "../services/transactionsService";
+import { newTransaction, update, deleteT } from "../services/transactionsService";
 import { useRequest } from "./useRequest";
 
 export const useTransaction = () => {
@@ -18,8 +18,13 @@ export const useTransaction = () => {
 
         return res
     };
+    const deleteTransaction = async (id) => {
+        const res = await execute(() => deleteT(id))
+        return res
+    }
 
     return {
+        deleteTransaction,
         createTransaction,
         updateTransaction,
         loading,

@@ -6,7 +6,7 @@ import {useTransaction} from "../../hooks/useTransaction"
 
 const Transactions = () => {
     const { user, reload } = useData();
-    const {updateTransaction} = useTransaction()
+    const {updateTransaction, deleteTransaction} = useTransaction()
     const { categories, loadingCategory } = useCategory();
 
     const [openForm, setOpenForm] = useState(false);
@@ -45,7 +45,11 @@ const Transactions = () => {
             setSelectedTransaction(null);
         }   
     };
-    const handleDelete = (id) => {
+    const handleDelete = async (id) => {
+        await deleteTransaction(id)
+        reload()
+        setOpenForm(false)
+        setSelectedTransaction(null)
 
     };
 
