@@ -6,8 +6,8 @@ import {useCategory} from "../../hooks/useCategory"
 import { useState } from "react";
 
 const Home = () => {
-    const { user, loading, error, sale, reload } = useData(); 
-    const {createTransaction} = useTransaction()
+    const { user, loading, error: dataError, sale, reload } = useData(); 
+    const {createTransaction, error: transactionError} = useTransaction()
     const {categories, loadCategorys, loadingCategory} =  useCategory()
     const [openForm, setOpenForm] = useState(false);
 
@@ -27,20 +27,20 @@ const Home = () => {
             date
         }
         await createTransaction(data)
-        reload()
         
         setDescript("")
         setValue("")
         setCategory("")
         setDate("")
+        reload()
         
     }
 
     if (loading) {
         return <p>Carregando...</p>;
     }
-    if (error) {
-        return <p>Erro: {error}</p>;
+    if (dataError) {
+        return <p>Erro: {dataError}</p>;
     }
 
     return (
@@ -72,7 +72,7 @@ const Home = () => {
                         <div className="form-container">
                             <h2>Nova Transação</h2>
                             <form  onSubmit={handleSubmit}>
-                                <input type="text" value={description} onChange={(e) => setDescript(e.target.value)} placeholder="Título" />
+                                <input type="text" value={description} onChange={(e) => setDescript(e.target.value)} placeholder="Descrinção" />
                                 <input type="number" value={value} onChange={(e) => setValue(e.target.value)}  placeholder="Valor" />
 
                                 <select value={type} onChange={(e) => setType(e.target.value)}>
@@ -94,7 +94,7 @@ const Home = () => {
                                     ))}
                                 </select>
                                 <input type="date" value={date} onChange={(e) => setDate(e.target.value)}/>
-
+                                {transactionError && <p className="form-error">{transactionError}</p>}
                                 <div className="form-actions">
                                     <button type="submit">Salvar</button>
                                     <button type="button" onClick={() => setOpenForm(false)}>

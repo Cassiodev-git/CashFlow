@@ -322,6 +322,12 @@
 
     animation: modalIn 0.25s ease;
 }
+.form-error {
+    color: #e74c3c;
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    text-align: center;
+}
 
 
 @keyframes modalIn {

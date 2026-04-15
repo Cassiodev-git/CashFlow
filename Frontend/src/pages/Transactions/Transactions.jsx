@@ -6,12 +6,12 @@ import {useTransaction} from "../../hooks/useTransaction"
 
 const Transactions = () => {
     const { user, reload } = useData();
-    const {updateTransaction, deleteTransaction} = useTransaction()
+    const {updateTransaction, deleteTransaction, error, loading} = useTransaction()
     const { categories, loadingCategory } = useCategory();
 
     const [openForm, setOpenForm] = useState(false);
     const [selectedTransaction, setSelectedTransaction] = useState(null);
-
+    const [search, setSearch] = useState("")
     const [description, setDescript] = useState("");
     const [value, setValue] = useState("");
     const [type, setType] = useState("income");
@@ -30,7 +30,6 @@ const Transactions = () => {
 
     const handleSubmit = async (e, id) => {
         e.preventDefault();
-
         const data = {
             description: description,
             value: value,
@@ -52,7 +51,19 @@ const Transactions = () => {
         setSelectedTransaction(null)
 
     };
+    const filteredTransactions = user?.transactions?.filter((t) => {
+        const text = search.toLocaleLowerCase()
 
+        return(
+            t.description?.toLocaleLowerCase().includes(text) ||
+            t.value.toString().includes(text) ||
+            t.type.toLocaleLowerCase().includes(text) ||
+            t.category?.name?.toLocaleLowerCase().includes(text)
+        )
+    })
+    const teste = () => {
+        console.log(error)
+    }
     return (
         <div className="dashboard-content">
 
@@ -67,13 +78,15 @@ const Transactions = () => {
                             type="text"
                             placeholder="Buscar..."
                             className="search-input"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
                         />
                     </div>
                 </div>
 
                 <div className="transacoes-lista">
-                    {user?.transactions?.length > 0 ? (
-                    user.transactions.map((u) => (
+                    {filteredTransactions?.length > 0 ? (
+                    filteredTransactions.map((u) => (
                         <div
                         className="transacao"
                         key={u.id}
@@ -97,7 +110,11 @@ const Transactions = () => {
                         </div>
                     ))
                     ) : (
-                    <p className="sem-transacao">Nenhuma transação registrada</p>
+                    <p className="sem-transacao">
+                        {search
+                            ? "Nenhuma transação encontrada"
+                            : "Nenhuma transação registrada"}
+                    </p>
                     )}
                 </div>
                 </div>
@@ -115,7 +132,7 @@ const Transactions = () => {
                 />
             </div>
 
-            <button className="btn-add">+ Nova Categoria</button>
+            <button className="btn-add" onClick={teste}>+ Nova Categoria</button>
 
             <div className="categorias-lista">
                 {categories.data?.length > 0 ? (
@@ -163,7 +180,7 @@ const Transactions = () => {
                     disabled={loadingCategory}
                 >
                     <option value="" disabled>
-                    {loadingCategory ? "Carregando..." : "Selecione a categoria"}
+                        {loadingCategory ? "Carregando..." : "Selecione a categoria"}
                     </option>
 
                     {categories.data?.map((c) => (
@@ -178,10 +195,11 @@ const Transactions = () => {
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                 />
-
+                {error && <p className="form-error">{error}</p>}
                 <div className="form-actions">
-                    <button type="submit">Salvar</button>
-
+                    <button type="submit" disabled={loading}>
+                        {loading? "Salvando..." : "Salvar"}
+                    </button>
                     <button
                     type="button"
                     onClick={() => {
@@ -194,6 +212,7 @@ const Transactions = () => {
                     <button
                     type="button"
                     className="btn-excluir-transacao"
+                    disabled={loading}
                     onClick={() => handleDelete(selectedTransaction.id)}
                     >
                     Excluir

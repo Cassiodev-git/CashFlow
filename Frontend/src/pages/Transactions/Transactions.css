@@ -130,6 +130,12 @@
     justify-content: space-between;
     gap: 10px;
 }
+.dashboard-content .form-error {
+    color: #e74c3c;
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    text-align: center;
+}
 
 .btn-excluir-transacao {
     background-color: #ff4d4f !important;

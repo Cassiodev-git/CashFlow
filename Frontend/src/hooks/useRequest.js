@@ -11,7 +11,7 @@ export const useRequest = () => {
             const res = await callback()
             return res
         }catch(err){
-            setError(err.message)
+            setError(err.response?.data?.message || "Error ao atualizar")
         }finally{
             setLoading(false)
         }
