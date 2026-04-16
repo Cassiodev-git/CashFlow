@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import {listCategorys} from "../services/categoryService"
+import {listCategorys, create} from "../services/categoryService"
 import { useRequest } from "./useRequest"
 
 export const useCategory = () => {
@@ -14,7 +14,12 @@ export const useCategory = () => {
     useEffect(() => {
         loadCategorys()
     }, [])
+    const createCategory = async (data) => {
+        const res = await create(data)
+        return res 
+    }
     return {
+            createCategory,
             loadCategorys,
             categories,
             loading: categoryRequest.loading,

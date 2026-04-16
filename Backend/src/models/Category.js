@@ -11,6 +11,10 @@ const Category = connection.define("Category", {
     name: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    icon: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 },{
     freezeTableName: true

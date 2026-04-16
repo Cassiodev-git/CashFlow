@@ -322,12 +322,7 @@
 
     animation: modalIn 0.25s ease;
 }
-.form-error {
-    color: #e74c3c;
-    font-size: 0.8rem;
-    margin-bottom: 8px;
-    text-align: center;
-}
+
 
 
 @keyframes modalIn {
@@ -416,6 +411,16 @@
 .form-actions button:active {
     transform: scale(0.97);
 }
+.transacao-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.transacao-icon {
+    color: #4caf50; 
+    flex-shrink: 0;
+}
 
 
 @media (max-width: 480px) {
@@ -474,7 +479,7 @@
 
 .entrada{
 
-    color:#4caf50;
+    color:#41f047;
     font-weight:bold;
 
 }

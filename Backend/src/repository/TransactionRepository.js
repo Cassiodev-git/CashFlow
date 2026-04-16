@@ -10,7 +10,7 @@ class TransactionRepository {
                 {
                     model: Category,
                     as: "category",
-                    attributes: ["id", "name"]
+                    attributes: ["id", "name", "icon"]
                 }
             ]
         })

@@ -2,16 +2,23 @@ import "../Transactions/Transactions.css"
 import { useState, useEffect } from "react";
 import { useData } from "../../hooks/useData";
 import { useCategory } from "../../hooks/useCategory";
-import {useTransaction} from "../../hooks/useTransaction"
+import { useTransaction } from "../../hooks/useTransaction";
+import { iconsMap } from "../../utils/iconsMap";
+import CategoryModal from "../../components/categoryModal/CategoryModal"
 
 const Transactions = () => {
     const { user, reload } = useData();
-    const {updateTransaction, deleteTransaction, error, loading} = useTransaction()
-    const { categories, loadingCategory } = useCategory();
+    const { updateTransaction, deleteTransaction, error, loading } = useTransaction();
+    const { categories, loadingCategory , error: catergoryError, createCategory, loadCategorys} = useCategory();
+
+    const [openCategoryForm, setOpenCategoryForm] = useState(false);
+    const [categoryName, setCategoryName] = useState("");
+    const [icon, setIcon] = useState("");
 
     const [openForm, setOpenForm] = useState(false);
     const [selectedTransaction, setSelectedTransaction] = useState(null);
-    const [search, setSearch] = useState("")
+    const [search, setSearch] = useState("");
+
     const [description, setDescript] = useState("");
     const [value, setValue] = useState("");
     const [type, setType] = useState("income");
@@ -20,208 +27,256 @@ const Transactions = () => {
 
     useEffect(() => {
         if (selectedTransaction) {
-        setDescript(selectedTransaction.description);
-        setValue(selectedTransaction.value);
-        setType(selectedTransaction.type);
-        setCategory(selectedTransaction.category_id);
-        setDate(selectedTransaction.date.split("T")[0]);
+            setDescript(selectedTransaction.description);
+            setValue(selectedTransaction.value);
+            setType(selectedTransaction.type);
+            setCategory(selectedTransaction.category_id);
+            setDate(selectedTransaction.date.split("T")[0]);
         }
     }, [selectedTransaction]);
 
     const handleSubmit = async (e, id) => {
         e.preventDefault();
+
         const data = {
-            description: description,
-            value: value,
-            type: type,
-            CategoryId: categoryId,
-            date: date
-        }
-        const res = await updateTransaction(id, data)
-        if(res){
-            reload()
+            description,
+            value,
+            type,
+            categoryId,
+            date
+        };
+
+        const res = await updateTransaction(id, data);
+
+        if (res) {
+            reload();
             setOpenForm(false);
             setSelectedTransaction(null);
-        }   
+        }
     };
+
     const handleDelete = async (id) => {
-        await deleteTransaction(id)
-        reload()
-        setOpenForm(false)
-        setSelectedTransaction(null)
-
+        await deleteTransaction(id);
+        reload();
+        setOpenForm(false);
+        setSelectedTransaction(null);
     };
-    const filteredTransactions = user?.transactions?.filter((t) => {
-        const text = search.toLocaleLowerCase()
 
-        return(
-            t.description?.toLocaleLowerCase().includes(text) ||
+    const handleCreateCategory = async (e) => {
+        e.preventDefault();
+        const data = {
+            name: categoryName,
+            icon: icon
+        };
+        await createCategory(data)
+        loadCategorys()
+        setOpenCategoryForm(false);
+        setCategoryName("");
+        setIcon("");
+    };
+
+    const filteredTransactions = user?.transactions?.filter((t) => {
+        const text = search.toLowerCase();
+
+        return (
+            t.description?.toLowerCase().includes(text) ||
             t.value.toString().includes(text) ||
-            t.type.toLocaleLowerCase().includes(text) ||
-            t.category?.name?.toLocaleLowerCase().includes(text)
-        )
-    })
-    const teste = () => {
-        console.log(error)
-    }
+            t.type.toLowerCase().includes(text) ||
+            t.category?.name?.toLowerCase().includes(text)
+        );
+    });
+
     return (
         <div className="dashboard-content">
 
-            <div className="coluna-principal">
-                
-                <div className="transacoes-card">
-                <div className="transacoes-topo">
-                    <h2 className="transacoes-header">Últimas Transações</h2>
 
-                    <div className="top-bar">
+            <div className="coluna-principal">
+                <div className="transacoes-card">
+
+                    <div className="transacoes-topo">
+                        <h2 className="transacoes-header">Últimas Transações</h2>
+
+                        <div className="top-bar">
+                            <input
+                                type="text"
+                                placeholder="Buscar..."
+                                className="search-input"
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="transacoes-lista">
+                        {filteredTransactions?.length > 0 ? (
+                            filteredTransactions.map((u) => {
+                                const Icon = iconsMap[u.category?.icon];
+
+                                return (
+                                    <div
+                                        className="transacao"
+                                        key={u.id}
+                                        onClick={() => {
+                                            setSelectedTransaction(u);
+                                            setOpenForm(true);
+                                        }}
+                                    >
+                                        <div className="transacao-esquerda">
+                                            {Icon && <Icon size={14} />}
+                                            <p className="titulo">{u.description}</p>
+                                            <span className="data">
+                                                {new Date(u.date).toLocaleDateString("pt-BR")}
+                                            </span>
+                                        </div>
+
+                                        <div className="transacao-direita">
+                                            <span className={`valor ${u.type}`}>
+                                                {u.type === "income" ? "+" : "-"} R$ {u.value}
+                                            </span>
+                                        </div>
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <p className="sem-transacao">
+                                {search
+                                    ? "Nenhuma transação encontrada"
+                                    : "Nenhuma transação registrada"}
+                            </p>
+                        )}
+                    </div>
+                </div>
+            </div>
+
+            <div className="coluna-lateral">
+                <div className="categorias-card">
+                    <h2 className="categorias-header">Categorias</h2>
+
+                    <div className="categorias-top-bar">
                         <input
                             type="text"
-                            placeholder="Buscar..."
-                            className="search-input"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
+                            placeholder="Buscar categoria..."
+                            className="categorias-search"
                         />
                     </div>
-                </div>
 
-                <div className="transacoes-lista">
-                    {filteredTransactions?.length > 0 ? (
-                    filteredTransactions.map((u) => (
-                        <div
-                        className="transacao"
-                        key={u.id}
-                        onClick={() => {
-                            setSelectedTransaction(u);
-                            setOpenForm(true);
-                        }}
-                        >
-                        <div className="transacao-esquerda">
-                            <p className="titulo">{u.description}</p>
-                            <span className="data">
-                            {new Date(u.date).toLocaleDateString("pt-BR")}
-                            </span>
-                        </div>
+                    <button
+                        className="btn-add"
+                        onClick={() => setOpenCategoryForm(true)}
+                    >
+                        + Nova Categoria
+                    </button>
 
-                        <div className="transacao-direita">
-                            <span className={`valor ${u.type}`}>
-                            {u.type === "income" ? "+" : "-"} R$ {u.value}
-                            </span>
-                        </div>
-                        </div>
-                    ))
-                    ) : (
-                    <p className="sem-transacao">
-                        {search
-                            ? "Nenhuma transação encontrada"
-                            : "Nenhuma transação registrada"}
-                    </p>
-                    )}
-                </div>
-                </div>
-            </div>
+                    <div className="categorias-lista">
+                        {categories.data?.length > 0 ? (
+                            categories.data.map((c) => {
+                                const Icon = iconsMap[c.icon];
 
-        <div className="coluna-lateral">
-            <div className="categorias-card">
-            <h2 className="categorias-header">Categorias</h2>
-
-            <div className="categorias-top-bar">
-                <input
-                type="text"
-                placeholder="Buscar categoria..."
-                className="categorias-search"
-                />
-            </div>
-
-            <button className="btn-add" onClick={teste}>+ Nova Categoria</button>
-
-            <div className="categorias-lista">
-                {categories.data?.length > 0 ? (
-                categories.data.map((c) => (
-                    <div className="categoria" key={c.id}>
-                    <p className="categoria-nome">{c.name}</p>
-                    <button className="btn-excluir">Excluir</button>
+                                return (
+                                    <div className="categoria" key={c.id}>
+                                        {Icon && <Icon size={14} />}
+                                        <p className="categoria-nome">{c.name}</p>
+                                        <button className="btn-excluir">Excluir</button>
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <p className="sem-categoria">Nenhuma categoria encontrada</p>
+                        )}
                     </div>
-                ))
-                ) : (
-                <p className="sem-categoria">Nenhuma categoria encontrada</p>
-                )}
-            </div>
-            </div>
-        </div>
-
-        {openForm && selectedTransaction && (
-            <div className="form-overlay">
-            <div className="form-container">
-                <h2>Editar Transação</h2>
-
-                <form onSubmit={(e) => handleSubmit(e, selectedTransaction.id)}>
-                <input
-                    type="text"
-                    value={description}
-                    onChange={(e) => setDescript(e.target.value)}
-                    placeholder="Título"
-                />
-
-                <input
-                    type="number"
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                    placeholder="Valor"
-                />
-
-                <select value={type} onChange={(e) => setType(e.target.value)}>
-                    <option value="income">Entrada</option>
-                    <option value="expense">Saída</option>
-                </select>
-
-                <select
-                    value={categoryId}
-                    onChange={(e) => setCategory(e.target.value)}
-                    disabled={loadingCategory}
-                >
-                    <option value="" disabled>
-                        {loadingCategory ? "Carregando..." : "Selecione a categoria"}
-                    </option>
-
-                    {categories.data?.map((c) => (
-                    <option key={c.id} value={c.id}>
-                        {c.name}
-                    </option>
-                    ))}
-                </select>
-
-                <input
-                    type="date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                />
-                {error && <p className="form-error">{error}</p>}
-                <div className="form-actions">
-                    <button type="submit" disabled={loading}>
-                        {loading? "Salvando..." : "Salvar"}
-                    </button>
-                    <button
-                    type="button"
-                    onClick={() => {
-                        setOpenForm(false);
-                        setSelectedTransaction(null);
-                    }}
-                    >
-                    Cancelar
-                    </button>
-                    <button
-                    type="button"
-                    className="btn-excluir-transacao"
-                    disabled={loading}
-                    onClick={() => handleDelete(selectedTransaction.id)}
-                    >
-                    Excluir
-                    </button>
                 </div>
-                </form>
             </div>
-            </div>
-        )}
+
+            {openForm && selectedTransaction && (
+                <div className="form-overlay">
+                    <div className="form-container">
+                        <h2>Editar Transação</h2>
+
+                        <form onSubmit={(e) => handleSubmit(e, selectedTransaction.id)}>
+                            <input
+                                type="text"
+                                value={description}
+                                onChange={(e) => setDescript(e.target.value)}
+                                placeholder="Título"
+                            />
+
+                            <input
+                                type="number"
+                                value={value}
+                                onChange={(e) => setValue(e.target.value)}
+                                placeholder="Valor"
+                            />
+
+                            <select value={type} onChange={(e) => setType(e.target.value)}>
+                                <option value="income">Entrada</option>
+                                <option value="expense">Saída</option>
+                            </select>
+
+                            <select
+                                value={categoryId}
+                                onChange={(e) => setCategory(e.target.value)}
+                                disabled={loadingCategory}
+                            >
+                                <option value="" disabled>
+                                    {loadingCategory ? "Carregando..." : "Selecione a categoria"}
+                                </option>
+
+                                {categories.data?.map((c) => (
+                                    <option key={c.id} value={c.id}>
+                                        {c.name}
+                                    </option>
+                                ))}
+                            </select>
+
+                            <input
+                                type="date"
+                                value={date}
+                                onChange={(e) => setDate(e.target.value)}
+                            />
+
+                            {error && <p className="form-error">{error}</p>}
+
+                            <div className="form-actions">
+                                <button type="submit" disabled={loading}>
+                                    {loading ? "Salvando..." : "Salvar"}
+                                </button>
+
+                                <button type="button" onClick={() => {
+                                    setOpenForm(false);
+                                    setSelectedTransaction(null);
+                                }}>
+                                    Cancelar
+                                </button>
+
+                                <button
+                                    type="button"
+                                    className="btn-excluir-transacao"
+                                    disabled={loading}
+                                    onClick={() => handleDelete(selectedTransaction.id)}
+                                >
+                                    Excluir
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+            <CategoryModal
+                open={openCategoryForm}
+                onClose={() => {
+                    setOpenCategoryForm(false);
+                    setCategoryName("");
+                    setIcon("");
+                }}
+                onCreate={handleCreateCategory}
+                categoryName={categoryName}
+                setCategoryName={setCategoryName}
+                icon={icon}
+                setIcon={setIcon}
+                iconsMap={iconsMap}
+                error={catergoryError}
+            />
+
         </div>
     );
 };
