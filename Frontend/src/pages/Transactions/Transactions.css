@@ -1,52 +1,80 @@
-.dashboard-content .transacoes-card {
+.dashboard-content {
+    display: flex;
+    gap: 16px;
+    animation: fadeIn 0.4s ease;
+}
+
+.dashboard-content .coluna-principal {
+    flex: 2;
+    animation: slideUp 0.4s ease;
+}
+
+.dashboard-content .coluna-lateral {
+    flex: 1;
+    position: sticky;
+    top: 10px;
+    animation: slideUp 0.5s ease;
+}
+
+.dashboard-content .transacoes-card,
+.dashboard-content .categorias-card {
     background: #fff;
     padding: 14px;
     border-radius: 12px;
     box-shadow: 0 3px 10px rgba(0,0,0,0.06);
 }
 
-.dashboard-content .transacoes-topo {
-    margin-bottom: 10px;
-}
-
-.dashboard-content .transacoes-header {
+.dashboard-content .transacoes-header,
+.dashboard-content .categorias-header {
     font-size: 1rem;
     margin-bottom: 10px;
 }
 
-.dashboard-content .top-bar {
-    display: flex;
-    gap: 6px;
+.dashboard-content .transacoes-topo {
+    margin-bottom: 10px;
 }
 
-.dashboard-content .search-input {
+.dashboard-content .top-bar,
+.dashboard-content .categorias-top-bar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.dashboard-content .search-input,
+.dashboard-content .categorias-search {
     flex: 1;
+    min-width: 60vh;
     padding: 8px 10px;
     border-radius: 8px;
     border: none;
-    background: #f9f9f9;
+    background: #f6f6f6;
     font-size: 0.85rem;
     outline: none;
-    transition: 0.2s;
+    transition: all 0.2s ease;
 }
 
-.dashboard-content .search-input:focus {
+.dashboard-content .search-input:focus,
+.dashboard-content .categorias-search:focus {
     background: #fff;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+    transform: scale(1.01);
 }
 
-.dashboard-content .filter-button {
+.dashboard-content .filter-button,
+.dashboard-content .btn-add {
     padding: 8px 12px;
     border: none;
     border-radius: 8px;
     background: #f4f4f4;
     cursor: pointer;
     font-size: 0.8rem;
-    transition: 0.2s;
+    transition: all 0.2s ease;
 }
 
-.dashboard-content .filter-button:hover {
-    background: #ececec;
+.dashboard-content .btn-add {
+    width: 100%;
+    margin: 12px 0;
 }
 
 .dashboard-content .transacoes-lista {
@@ -65,17 +93,19 @@
     padding: 10px;
     border-radius: 8px;
     background: #fff;
-    transition: background 0.2s ease;
-}
-
-.dashboard-content .transacao:hover {
-    background: #f7f7f7;
+    cursor: pointer;
+    animation: fadeInItem 0.3s ease;
 }
 
 .dashboard-content .transacao-esquerda {
     display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dashboard-content .transacao-info {
+    display: flex;
     flex-direction: column;
-    gap: 2px;
 }
 
 .dashboard-content .titulo {
@@ -91,6 +121,7 @@
 .dashboard-content .valor {
     font-size: 0.85rem;
     font-weight: 600;
+    transition: transform 0.2s ease;
 }
 
 .dashboard-content .income {
@@ -101,35 +132,63 @@
     color: #e74c3c;
 }
 
-.dashboard-content .sem-transacao {
+.icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+}
+
+.dashboard-content .categorias-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 350px;
+    overflow-y: auto;
+    margin-top: 4px;
+}
+
+.dashboard-content .categoria {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.dashboard-content .categoria-nome {
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+.dashboard-content .btn-excluir {
+    border: none;
+    background: transparent;
+    color: #e74c3c;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.dashboard-content .sem-transacao,
+.dashboard-content .sem-categoria {
     text-align: center;
     font-size: 0.8rem;
     color: #aaa;
     margin-top: 10px;
 }
 
-.dashboard-content {
-    display: flex;
-    gap: 15px;
-}
-
-.dashboard-content .coluna-principal {
-    flex: 2;
-}
-
-.dashboard-content .coluna-lateral {
-    flex: 1;
-    position: sticky;
-    top: 10px;
-}
-
-
-
 .dashboard-content .form-actions {
     display: flex;
     justify-content: space-between;
     gap: 10px;
 }
+
 .dashboard-content .form-error {
     color: #e74c3c;
     font-size: 0.8rem;
@@ -144,148 +203,68 @@
     padding: 6px 10px !important;
     border-radius: 6px !important;
     cursor: pointer !important;
-    transition: 0.2s !important;
-}
-
-.btn-excluir-transacao:hover {
-    background-color: #d9363e;
-}
-
-
-.dashboard-content .categorias-card {
-    background: #fff;
-    padding: 14px;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
-}
-
-.dashboard-content .categorias-header {
-    font-size: 1rem;
-    margin-bottom: 10px;
-}
-
-.dashboard-content .categorias-top-bar {
-    margin-bottom: 10px;
-}
-
-.dashboard-content .categorias-search {
-    width: 100%;
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: none;
-    background: #f9f9f9;
-    font-size: 0.85rem;
-    outline: none;
-    transition: 0.2s;
-}
-
-.dashboard-content .categorias-search:focus {
-    background: #fff;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
-}
-
-.dashboard-content .btn-add {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: none;
-    border-radius: 8px;
-    background: #f4f4f4;
-    cursor: pointer;
-    font-size: 0.8rem;
-    transition: 0.2s;
-}
-
-.dashboard-content .btn-add:hover {
-    background: #ececec;
-}
-
-.dashboard-content .categorias-lista {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    max-height: 350px;
-    overflow-y: auto;
-}
-
-.dashboard-content .categoria {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-radius: 8px;
-    background: #fff;
     transition: background 0.2s ease;
 }
 
-.dashboard-content .categoria:hover {
-    background: #f7f7f7;
+.form-overlay {
+    animation: fadeIn 0.25s ease;
 }
 
-.dashboard-content .categoria-nome {
-    font-size: 0.88rem;
-    font-weight: 500;
+.form-container {
+    animation: popIn 0.25s ease;
 }
-
-.dashboard-content .btn-excluir {
-    border: none;
-    background: transparent;
-    color: #e74c3c;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.dashboard-content .btn-excluir:hover {
-    opacity: 0.7;
-}
-
-.dashboard-content .sem-categoria {
-    text-align: center;
-    font-size: 0.8rem;
-    color: #aaa;
-
-
-}
-
 
 @media (max-width: 900px) {
     .dashboard-content {
         flex-direction: column;
     }
-}
 
-@media (max-width: 600px) {
-
-    .dashboard-content .categoria {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
-    }
-
-    .dashboard-content .categorias-lista {
-        max-height: 250px;
+    .dashboard-content .coluna-lateral {
+        position: relative;
+        top: auto;
     }
 }
 
 @media (max-width: 600px) {
 
-    .dashboard-content .transacoes-card {
+    .dashboard-content .transacoes-card,
+    .dashboard-content .categorias-card {
         padding: 12px;
     }
 
-    .dashboard-content .top-bar {
+    .dashboard-content .top-bar,
+    .dashboard-content .categorias-top-bar {
         flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
     }
 
-    .dashboard-content .filter-button {
+    .dashboard-content .search-input,
+    .dashboard-content .categorias-search {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .dashboard-content .filter-button,
+    .dashboard-content .btn-add {
         width: 100%;
     }
 
     .dashboard-content .transacao {
         flex-direction: column;
         align-items: flex-start;
-        gap: 4px;
+        gap: 8px;
+    }
+
+    .dashboard-content .transacao-esquerda {
+        width: 100%;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .dashboard-content .transacao-info {
+        flex: 1;
+        min-width: 0;
     }
 
     .dashboard-content .transacao-direita {
@@ -294,7 +273,48 @@
         justify-content: flex-end;
     }
 
+    .icon-wrapper {
+        width: 34px;
+        height: 34px;
+        flex-shrink: 0;
+    }
+
+    .dashboard-content .categorias-lista {
+        max-height: 250px;
+    }
+
     .dashboard-content .transacoes-lista {
         max-height: 300px;
     }
+
+    .dashboard-content .categoria {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .dashboard-content .categoria-nome {
+        width: 100%;
+        word-break: break-word;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInItem {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
 }
