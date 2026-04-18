@@ -180,7 +180,7 @@ A aplicação utiliza autenticação baseada em **JWT (JSON Web Token)**:
 
 1. **Clone o repositório**
    ```bash
-   git clone https://github.com/seu-usuario/CashFlow.git
+   git clone https://github.com/Cassiodev-git/CashFlow.git
    cd CashFlow
    ```
 
