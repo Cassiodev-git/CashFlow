@@ -33,6 +33,7 @@ const Transactions = () => {
 
     const [selectedTransaction, setSelectedTransaction] = useState(null);
     const [search, setSearch] = useState("");
+    const [categorySearch, setCategorySearch] = useState("")
 
     const [description, setDescription] = useState("");
     const [value, setValue] = useState("");
@@ -109,7 +110,15 @@ const Transactions = () => {
             t.category?.name?.toLowerCase().includes(text)
         );
     });
-
+    const filteredCategories = categories.data?.filter((c) => {
+        const text = categorySearch.toLowerCase();
+        return (
+            c.name?.toLowerCase().includes(text)
+        );
+    });
+    const teste = () => {
+        console.log(categories)
+    }
 
     return (
         <div className="dashboard-content">
@@ -185,6 +194,8 @@ const Transactions = () => {
                         type="text"
                         placeholder="Buscar categoria..."
                         className="categorias-search"
+                        value={categorySearch}
+                        onChange={(e) => setCategorySearch(e.target.value)}
                     />
 
                     <button
@@ -195,8 +206,8 @@ const Transactions = () => {
                     </button>
 
                     <div className="categorias-lista">
-                        {categories.data?.length > 0 ? (
-                            categories.data.map((c) => {
+                        {filteredCategories?.length > 0 ? (
+                            filteredCategories.map((c) => {
                                 const Icon = iconsMap[c.icon];
 
                                 return (
@@ -207,7 +218,7 @@ const Transactions = () => {
 
                                         <p className="categoria-nome">{c.name}</p>
 
-                                        <button className="btn-excluir">
+                                        <button className="btn-excluir" onClick={teste}>
                                             Excluir
                                         </button>
                                     </div>
@@ -215,7 +226,10 @@ const Transactions = () => {
                             })
                         ) : (
                             <p className="sem-categoria">
-                                Nenhuma categoria encontrada
+                                {categorySearch
+                                    ? "Nenhuma categoria encontrada"
+                                    : "Nenhuma categoria registrada"
+                                }
                             </p>
                         )}
                     </div>
