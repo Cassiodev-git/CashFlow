@@ -351,11 +351,6 @@ Por favor, siga o padrão de commits:
 
 ---
 
-## 📄 Licença
-
-Este projeto está sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
-
----
 
 ## 👏 Agradecimentos
 
