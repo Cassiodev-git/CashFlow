@@ -1,11 +1,13 @@
 import AppError from "../utils/AppError.js";
 import TransactionRepository from "../repository/TransactionRepository.js";
+import Transaction from "../models/Transaction.js";
+import { Sequelize } from "sequelize";
 
 class TransactionService {
     async listId(id){
         const transaction = await TransactionRepository.listId(id)
         if(!transaction){
-            throw new AppError("Transação não encontrada", 401)
+            throw new AppError("Transação não encontrada", 404)
         }
         return transaction
     }
@@ -38,7 +40,7 @@ class TransactionService {
             throw new AppError("Transação não encontrada",404)
         }
         return await TransactionRepository.toUpdate(id, data)
-        
+
     }
     async delete(id){
         const transaction = await TransactionRepository.listId(id)
@@ -49,23 +51,29 @@ class TransactionService {
         return await TransactionRepository.delete(id)
     }
     async getsummary(id){
-        const transactios = await TransactionRepository.listByUser(id)
-        let entries = 0
-        let said = 0
-        for(const t of transactios){
-            if(t.type === "income"){
-                entries += parseFloat(t.value)
-            }else{
-                said += parseFloat(t.value)
-            }
-        }
-        const sale = entries - said
+        const result = await Transaction.findAll({
+          where: { userId: id },
+          attributes: [
+            [
+              Sequelize.fn('SUM',
+                Sequelize.literal(`CASE WHEN type = 'income' THEN value ELSE 0 END`)
+              ),
+              'entries'
+            ],
+            [
+              Sequelize.fn('SUM',
+                Sequelize.literal(`CASE WHEN type = 'expense' THEN value ELSE 0 END`)
+              ),
+              'said'
+            ]
+          ],
+          raw: true
+        });
 
-        return {
-            entries,
-            said,
-            sale
-        }
+        const { entries = 0, said = 0 } = result[0] || {};
+        const sale = parseFloat(entries) - parseFloat(said);
+
+        return { entries, said, sale };
     }
 }
 export default new TransactionService()

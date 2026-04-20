@@ -29,7 +29,7 @@ class CategoryService{
     async delete(id){
         const category = await CategoryRepository.listId(id)
         if(!category){
-            throw new AppError("Categoria não encontrada", 400)
+            throw new AppError("Categoria não encontrada", 404)
         }
         return await CategoryRepository.delete(id)
     }
