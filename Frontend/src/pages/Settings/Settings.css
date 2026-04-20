@@ -37,7 +37,7 @@
     font-weight: 600;
 }
 
-/* ITENS */
+
 .setting-item {
     display: flex;
     justify-content: space-between;
@@ -60,7 +60,6 @@
     font-weight: 500;
 }
 
-/* SELECT */
 .setting-item select {
     padding: 6px 10px;
     border-radius: 8px;
@@ -75,7 +74,7 @@
     background: #fff;
 }
 
-/* CHECKBOX */
+
 .setting-item input[type="checkbox"] {
     width: 18px;
     height: 18px;
@@ -88,7 +87,7 @@
     transform: scale(0.9);
 }
 
-/* BOTÃO */
+
 .btn-save {
     width: 100%;
     margin-top: 10px;
@@ -113,9 +112,16 @@
     transform: scale(0.97);
 }
 
-/* DARK MODE */
+
 body.dark .settings-container {
     color: #fff;
+}
+body.dark .settings-container h1 {
+    color: #1d1d1d;
+}
+
+body.dark .settings-card h2 {
+    color: #d0d0d0;
 }
 
 body.dark .settings-card {
@@ -141,7 +147,7 @@ body.dark .setting-item select:focus {
     background: #333;
 }
 
-/* ANIMAÇÕES */
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -162,9 +168,7 @@ body.dark .setting-item select:focus {
     }
 }
 
-/* RESPONSIVIDADE */
 
-/* Tablet */
 @media (max-width: 768px) {
     .settings-container {
         padding: 15px;
@@ -175,7 +179,7 @@ body.dark .setting-item select:focus {
     }
 }
 
-/* Mobile */
+
 @media (max-width: 480px) {
     .settings-container {
         margin: 20px 10px;

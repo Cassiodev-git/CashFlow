@@ -52,7 +52,7 @@ const Sidebar = () => {
                         }
                         
                     >
-                        <img src={Transaction} alt="Config" className="logo-img-side"/>
+                        <img src={Config} alt="Config" className="logo-img-side"/>
                         Configuração
                     </NavLink>
                 

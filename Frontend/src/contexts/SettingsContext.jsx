@@ -4,21 +4,18 @@ const SettingsContext = createContext();
 
 export const SettingsProvider = ({ children }) => {
 
-    const [settings, setSettings] = useState({
-        darkMode: false,
-        showChart: true
-    });
-
-    useEffect(() => {
-        const saved = JSON.parse(localStorage.getItem("settings"));
+    const [settings, setSettings] = useState(() => {
+        const saved = localStorage.getItem("settings");
 
         if (saved) {
-            setSettings(prev => ({
-                ...prev,
-                ...saved
-            }));
+            return JSON.parse(saved);
         }
-    }, []);
+
+        return {
+            darkMode: false,
+            showChart: true
+        };
+    });
 
     useEffect(() => {
         localStorage.setItem("settings", JSON.stringify(settings));
