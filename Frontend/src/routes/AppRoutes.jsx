@@ -5,7 +5,7 @@ import Registration from "../pages/Registration/Registration.jsx"
 import ProtectedRoute from "../components/router/ProtectedRoute.jsx"
 import Layout from "../components/layout/Layout.jsx"
 import Transactions from "../pages/Transactions/Transactions.jsx"
-import Config from "../pages/config/Config.jsx"
+import Settings from "../pages/Settings/Settings.jsx"
 const AppRoutes = () => {
     return(
         <BrowserRouter>
@@ -15,7 +15,7 @@ const AppRoutes = () => {
                 <Route element={<ProtectedRoute><Layout/></ProtectedRoute>}>
                     <Route path="/home" element={<Home/>}/>
                     <Route path="/transaction" element={<Transactions/>}/>
-                    <Route path="/config" element={<Config/>}/>
+                    <Route path="/config" element={<Settings/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

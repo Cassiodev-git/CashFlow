@@ -24,7 +24,8 @@ const Transactions = () => {
         loadingCategory,
         error: categoryError,
         createCategory,
-        loadCategorys
+        loadCategorys,
+        deleteCategoryId
     } = useCategory();
 
 
@@ -83,6 +84,10 @@ const Transactions = () => {
         setOpenForm(false);
         setSelectedTransaction(null);
     };
+    const handleDeleteCategory = async (id) => {
+        await deleteCategoryId(id)
+        reload()
+    }
 
     const handleCreateCategory = async (e) => {
         e.preventDefault();
@@ -116,10 +121,6 @@ const Transactions = () => {
             c.name?.toLowerCase().includes(text)
         );
     });
-    const teste = () => {
-        console.log(categories)
-    }
-
     return (
         <div className="dashboard-content">
 
@@ -218,7 +219,7 @@ const Transactions = () => {
 
                                         <p className="categoria-nome">{c.name}</p>
 
-                                        <button className="btn-excluir" onClick={teste}>
+                                        <button className="btn-excluir" onClick={(e) => handleDeleteCategory(c.id)}>
                                             Excluir
                                         </button>
                                     </div>

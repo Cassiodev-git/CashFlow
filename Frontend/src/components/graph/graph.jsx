@@ -1,11 +1,21 @@
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { useState } from "react";
+import { useSettings } from "../../contexts/SettingsContext";
 import "./graph.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Graph = ({ entries = 0, said = 0 }) => {
+
+    const { settings, setSettings } = useSettings();
+
+    const toggleChart = () => {
+        setSettings(prev => ({
+            ...prev,
+            showChart: !prev.showChart
+        }));
+    };
+
     const data = {
         labels: ["Entrada", "Saída"],
         datasets: [
@@ -16,35 +26,36 @@ const Graph = ({ entries = 0, said = 0 }) => {
             },
         ],
     };
-    const [showChart, setShowChart] = useState(true);
 
     return (
         <div className="grafico-card">
             <div className="grafico-header">
                 <h2>Resumo</h2>
-                <button className="toggle-btn" onClick={() => setShowChart(!showChart)}>
-                    {showChart ? "Ocultar" : "Mostrar"}
+                <button className="toggle-btn" onClick={toggleChart}>
+                    {settings.showChart ? "Ocultar" : "Mostrar"}
                 </button>
             </div>
 
-            <div className={`grafico-wrapper ${showChart ? "" : "hidden"}`}>
-                <Pie
-                    data={data}
-                    options={{
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: "top",
+            {settings.showChart && (
+                <div className="grafico-wrapper">
+                    <Pie
+                        data={data}
+                        options={{
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: "top",
+                                },
                             },
-                        },
-                        animation: {
-                            animateScale: true,
-                            animateRotate: true,
-                        },
-                    }}
-                />
-            </div>
+                            animation: {
+                                animateScale: true,
+                                animateRotate: true,
+                            },
+                        }}
+                    />
+                </div>
+            )}
         </div>
     );
 };

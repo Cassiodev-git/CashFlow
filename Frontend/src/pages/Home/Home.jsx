@@ -157,14 +157,10 @@ const Home = () => {
                         </div>
                     </div>
                 )}
-
-                {/* GRÁFICO */}
                 <Graph
                     entries={sale?.entries}
                     said={sale?.said}
                 />
-
-                {/* TRANSAÇÕES */}
                 <div className="transacoes-card">
                     <h2 className="transacoes-header">
                         Últimas Transações
