@@ -126,7 +126,7 @@
 
 .dashboard-content .data {
     font-size: 0.7rem;
-    color: var(--text-secondary);
+    color: var(--text-light);
 }
 
 .dashboard-content .valor {

@@ -151,7 +151,7 @@
 
 .saldo-valor{
 
-    font-size:46px;
+    font-size:35px;
 
     margin:15px 0;
 
@@ -240,15 +240,6 @@
 
 }
 
-.transacao:hover{
-
-    background:#f7f7f7;
-
-    padding-left:10px;
-
-    border-radius:8px;
-
-}
 
 .transacao-info{
 
@@ -412,7 +403,6 @@
 }
 
 .transacao-icon {
-    color: #4caf50; 
     flex-shrink: 0;
 }
 

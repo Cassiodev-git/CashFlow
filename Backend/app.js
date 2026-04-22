@@ -46,7 +46,7 @@ async function startServer() {
             console.log(`Servidor rodando na porta ${PORT}`)
         })
     }catch(erro){
-        console.log("Erro ao iniciar a API")
+        console.log(erro)
     }
 }
 startServer()

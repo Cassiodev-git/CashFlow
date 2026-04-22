@@ -65,7 +65,7 @@ const Transactions = () => {
             description,
             value,
             type,
-            categoryId,
+            CategoryId: categoryId,
             date
         };
 
@@ -168,6 +168,7 @@ const Transactions = () => {
 
                                         <div className="transacao-direita">
                                             <span className={`valor ${t.type}`}>
+                                                
                                                 {t.type === "income" ? "+" : "-"} R$ {t.value}
                                             </span>
                                         </div>

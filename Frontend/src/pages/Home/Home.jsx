@@ -5,11 +5,13 @@ import { useTransaction } from "../../hooks/useTransaction";
 import { useCategory } from "../../hooks/useCategory";
 import { useState } from "react";
 import { iconsMap } from "../../utils/iconsMap";
+import { useSettings } from "../../contexts/SettingsContext";
 
 const Home = () => {
     const { user, loading, error: dataError, sale, reload } = useData();
     const { createTransaction, error: transactionError } = useTransaction();
     const { categories, loadingCategory } = useCategory();
+    const { settings} = useSettings()
 
     const [openForm, setOpenForm] = useState(false);
 
@@ -17,7 +19,7 @@ const Home = () => {
     const [value, setValue] = useState("");
     const [type, setType] = useState("income");
     const [date, setDate] = useState("");
-    const [categoryId, setCategory] = useState("");
+    const [categoryId, setCategory] = useState("")
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -40,7 +42,7 @@ const Home = () => {
         reload();
     };
     const teste = () =>{
-        console.log(user.transactions)
+        console.log(settings)
     }
 
     if (loading) return <p>Carregando...</p>;
@@ -68,7 +70,7 @@ const Home = () => {
                     <p className="saldo-header">Saldo Atual</p>
 
                     <h1 className="saldo-valor">
-                        R$ {sale?.sale}
+                        {settings.currency} : {settings?.showBalance && sale?.sale || "*****"}
                     </h1>
 
                     <div className="saldo-info">
@@ -187,7 +189,7 @@ const Home = () => {
                                                 </p>
 
                                                 <span className="data">
-                                                    {new Date(u.date).toLocaleDateString("pt-BR")}
+                                                    {new Date(u.date).toLocaleDateString(`pt-${settings.dateFormat}`)}
                                                 </span>
                                             </div>
                                         </div>
