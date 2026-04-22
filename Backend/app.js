@@ -15,7 +15,7 @@ const app = express()
 
 app.use(express.json())
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "*",
     credentials: true
 }))
 
@@ -23,6 +23,8 @@ app.use("/users", userRoute)
 app.use("/transactions", transactionRoute)
 app.use("/categorys", categoryRoute)
 app.use("/", welcomeRoute)
+
+app.use(router)
 
 app.use((req, res) => {
     return res.status(404).json({
@@ -33,11 +35,16 @@ app.use((req, res) => {
 
 app.use(errorMiddleware)
 async function startServer() {
+
     try{
         await connection.authenticate()
         await connection.sync({force: false})
-        app.use(router)
-        app.listen(9000)
+        
+        const PORT = process.env.PORT || 9000
+
+        app.listen(PORT, () => {
+            console.log(`Servidor rodando na porta ${PORT}`)
+        })
     }catch(erro){
         console.log("Erro ao iniciar a API")
     }
