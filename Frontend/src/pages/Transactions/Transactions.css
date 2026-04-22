@@ -20,10 +20,11 @@
 
 .dashboard-content .transacoes-card,
 .dashboard-content .categorias-card {
-    background: #fff;
+    background: var(--light-bg);
     padding: 14px;
     border-radius: 12px;
     box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    color: var(--text-primary);
 }
 
 .dashboard-content .transacoes-header,
@@ -46,8 +47,10 @@
     min-width: 0;
     padding: 8px 10px;
     border-radius: 8px;
+    margin-bottom: 8px;
     border: none;
-    background: #f6f6f6;
+    background: var(--light-bg);
+    color: var(--text-primary);
     font-size: 0.85rem;
     outline: none;
     transition: 0.2s ease;
@@ -55,8 +58,9 @@
 
 .dashboard-content .search-input:focus,
 .dashboard-content .categorias-search:focus {
-    background: #fff;
-    box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+    background: var(--white);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.1);
+    color: var(--text-primary);
 }
 
 .dashboard-content .filter-button,
@@ -64,7 +68,8 @@
     padding: 8px 12px;
     border: none;
     border-radius: 8px;
-    background: #f4f4f4;
+    background: var(--light-bg);
+    color: var(--text-primary);
     cursor: pointer;
     font-size: 0.8rem;
 }
@@ -75,6 +80,7 @@
 }
 
 .dashboard-content .transacoes-lista {
+    
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -96,7 +102,8 @@
     align-items: center;
     padding: 10px;
     border-radius: 8px;
-    background: #fff;
+    background-color: var(--medium-bg);
+    color: var(--text-light);
 }
 
 .dashboard-content .transacao-esquerda {
@@ -108,16 +115,18 @@
 .dashboard-content .transacao-info {
     display: flex;
     flex-direction: column;
+    color: var(--text-light);
 }
 
 .dashboard-content .titulo {
     font-size: 0.88rem;
     font-weight: 500;
+    color: var(--text-light);
 }
 
 .dashboard-content .data {
     font-size: 0.7rem;
-    color: #888;
+    color: var(--text-secondary);
 }
 
 .dashboard-content .valor {
@@ -157,12 +166,14 @@
     align-items: center;
     padding: 10px;
     border-radius: 8px;
-    background: #fff;
+    background: var(--medium-bg);
+    color: var(--text-light);
 }
 
 .dashboard-content .categoria-nome {
     font-size: 0.88rem;
     font-weight: 500;
+    color: var(--text-light);
 }
 
 .dashboard-content .btn-excluir {

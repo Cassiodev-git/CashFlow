@@ -13,7 +13,11 @@ export const SettingsProvider = ({ children }) => {
 
         return {
             darkMode: false,
-            showChart: true
+            showChart: true,
+            currency: "BRL",
+            dateFormat: "BR",
+            showBalance: true,
+            roundValues: false
         };
     });
 

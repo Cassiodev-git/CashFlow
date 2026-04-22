@@ -1,4 +1,3 @@
-
 .form-overlay {
     position: fixed;
     top: 0;
@@ -20,8 +19,8 @@
 
 
 .form-container {
-    background: #ffffff;
-    color: #1e1e1e;
+    background: var(--light-bg);
+    color: var(--text-primary);
 
     padding: 20px;
     border-radius: 12px;
@@ -140,6 +139,7 @@
 .form-actions button[type="button"]:hover {
     background: #ddd;
 }
+
 .form-error {
     margin-bottom: 12px;
     padding: 10px;
@@ -162,6 +162,7 @@
         opacity: 0;
         transform: translateY(-3px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -172,6 +173,7 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -182,6 +184,7 @@
         transform: scale(0.95);
         opacity: 0;
     }
+
     to {
         transform: scale(1);
         opacity: 1;

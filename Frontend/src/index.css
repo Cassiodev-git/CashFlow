@@ -18,10 +18,21 @@ body {
     margin: 0;
     font-family: 'Arial', sans-serif;
     background-color: var(--light-bg);
-    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 html, body {
     height: 100%;
     overflow-x: hidden;
+}
+
+body.dark {
+    background-color: var(--dark-bg);
+    color: var(--text-light);
+}
+
+body.dark {
+    --text-primary: var(--text-light);
+    --text-secondary: var(--text-muted);
+    --border-color: var(--medium-bg);
 }

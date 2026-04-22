@@ -1,45 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useSettings } from "../../contexts/SettingsContext";
 import "./Settings.css";
 
 const Settings = () => {
-
-    const [darkMode, setDarkMode] = useState(false);
-    const [showChart, setShowChart] = useState(true);
-    const [currency, setCurrency] = useState("BRL");
-    const [dateFormat, setDateFormat] = useState("BR");
-    const [showBalance, setShowBalance] = useState(true);
-    const [roundValues, setRoundValues] = useState(false);
+    const { settings, setSettings } = useSettings();
 
     useEffect(() => {
-        const saved = JSON.parse(localStorage.getItem("settings"));
-
-        if (saved) {
-            setDarkMode(saved.darkMode ?? false);
-            setShowChart(saved.showChart ?? true);
-            setCurrency(saved.currency ?? "BRL");
-            setDateFormat(saved.dateFormat ?? "BR");
-            setShowBalance(saved.showBalance ?? true);
-            setRoundValues(saved.roundValues ?? false);
-        }
-
-        document.body.classList.toggle("dark", saved?.darkMode);
-    }, []);
-
-    useEffect(() => {
-        document.body.classList.toggle("dark", darkMode);
-    }, [darkMode]);
+        document.body.classList.toggle("dark", settings.darkMode);
+    }, [settings.darkMode]);
 
     const handleSave = () => {
-        const data = {
-            darkMode,
-            showChart,
-            currency,
-            dateFormat,
-            showBalance,
-            roundValues
-        };
-
-        localStorage.setItem("settings", JSON.stringify(data));
+        setSettings(settings);
     };
 
     return (
@@ -55,8 +26,8 @@ const Settings = () => {
                     <label>Modo escuro</label>
                     <input
                         type="checkbox"
-                        checked={darkMode}
-                        onChange={() => setDarkMode(!darkMode)}
+                        checked={settings.darkMode}
+                        onChange={(e) => setSettings({ ...settings, darkMode: e.target.checked })}
                     />
                 </div>
 
@@ -64,8 +35,8 @@ const Settings = () => {
                     <label>Mostrar gráfico</label>
                     <input
                         type="checkbox"
-                        checked={showChart}
-                        onChange={() => setShowChart(!showChart)}
+                        checked={settings.showChart}
+                        onChange={(e) => setSettings({ ...settings, showChart: e.target.checked })}
                     />
                 </div>
 
@@ -73,8 +44,8 @@ const Settings = () => {
                     <label>Mostrar saldo na dashboard</label>
                     <input
                         type="checkbox"
-                        checked={showBalance}
-                        onChange={() => setShowBalance(!showBalance)}
+                        checked={settings.showBalance}
+                        onChange={(e) => setSettings({ ...settings, showBalance: e.target.checked })}
                     />
                 </div>
 
@@ -87,8 +58,8 @@ const Settings = () => {
                 <div className="setting-item">
                     <label>Moeda</label>
                     <select
-                        value={currency}
-                        onChange={(e) => setCurrency(e.target.value)}
+                        value={settings.currency}
+                        onChange={(e) => setSettings({ ...settings, currency: e.target.value })}
                     >
                         <option value="BRL">Real (R$)</option>
                         <option value="USD">Dólar ($)</option>
@@ -98,8 +69,8 @@ const Settings = () => {
                 <div className="setting-item">
                     <label>Formato de data</label>
                     <select
-                        value={dateFormat}
-                        onChange={(e) => setDateFormat(e.target.value)}
+                        value={settings.dateFormat}
+                        onChange={(e) => setSettings({ ...settings, dateFormat: e.target.value })}
                     >
                         <option value="BR">DD/MM/YYYY</option>
                         <option value="US">MM/DD/YYYY</option>
@@ -110,8 +81,8 @@ const Settings = () => {
                     <label>Arredondar valores</label>
                     <input
                         type="checkbox"
-                        checked={roundValues}
-                        onChange={() => setRoundValues(!roundValues)}
+                        checked={settings.roundValues}
+                        onChange={(e) => setSettings({ ...settings, roundValues: e.target.checked })}
                     />
                 </div>
 

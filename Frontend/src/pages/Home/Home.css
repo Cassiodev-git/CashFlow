@@ -4,14 +4,12 @@
     display:flex;
     justify-content:center;
     padding:0px 60px;
-    min-height: calc(100vh - 60px); /* Garante altura mínima adequada */
+    min-height: calc(100vh - 60px); 
 }
 
 .dashboard-container{
-
     width:100%;
     max-width:1000px;
-
     animation:fadeContainer .7s ease;
 
 }
@@ -170,15 +168,11 @@
 }
 
 .transacoes-card{
-
-    background:white;
-
     border-radius:16px;
-
     padding:30px;
-
     box-shadow:0 15px 35px rgba(0,0,0,0.1);
-
+    background: var(--light-bg);
+    color: var(--text-primary);
 }
 
 .transacoes-header{
