@@ -1,2 +1,7 @@
-import dotenv from 'dotenv'
-dotenv.config()
+import dotenv from "dotenv"
+
+const envFile = process.env.NODE_ENV === "production"
+    ? ".env.production"
+    : ".env.localhost"
+
+dotenv.config({ path: envFile })

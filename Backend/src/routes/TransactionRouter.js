@@ -6,7 +6,7 @@ import  {authMiddleware} from "../middlewares/authMiddleware.js";
 const router = Router()
 
 router.get("/",authMiddleware, TransactionController.listByUser)
-router.get("/:id",authMiddleware, TransactionController.listId)
+router.get("/sale",authMiddleware,TransactionController.summary)
 
 router.post("/",authMiddleware, validateTransaction, TransactionController.create)
 router.put('/:id',authMiddleware,validateTransaction, TransactionController.update)

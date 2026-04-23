@@ -1,5 +1,3 @@
-import  Transaction  from "../models/Transaction.js";
-import Category from "../models/Category.js"
 import User from "../models/User.js";
 
 class UserRepository {
@@ -7,20 +5,6 @@ class UserRepository {
         return await User.findOne({
             where: {id},
             attributes: {exclude: ['password']},
-            include:[
-                {
-                    model: Transaction,
-                    as: "transactions",
-                    attributes: ["id", "description","value","type","date"],
-                    include: [
-                        {
-                            model: Category,
-                            as: "category",
-                            attributes: ["id", "name", "icon"]
-                        }
-                    ]
-                }
-            ]
         })
     }
     async listEmail(email){
