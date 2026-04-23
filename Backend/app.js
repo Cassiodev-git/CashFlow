@@ -54,7 +54,7 @@ const methodLimiter = (req, res, next) => {
 
 app.use("/transactions", methodLimiter)
 app.use("/users", methodLimiter)
-app.use("/categorys", methodLimiterc)
+app.use("/categorys", methodLimiter)
 
 app.use("/transactions", transactionRoute)
 app.use("/users", userRoute)
