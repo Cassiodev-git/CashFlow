@@ -2,6 +2,8 @@ import { useState } from "react";
 
 export const useForm = (initialValues, submitCallback) => {
     const [values, setValues] = useState(initialValues);
+    const [error, setError] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -14,12 +16,30 @@ export const useForm = (initialValues, submitCallback) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await submitCallback(values);
+
+        setIsSubmitting(true);
+        setError(null);
+
+        try {
+            await submitCallback(values);
+        } catch (err) {
+            setError(err);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const resetForm = () => {
+        setValues(initialValues);
+        setError(null);
     };
 
     return {
         values,
+        handleChange,
         handleSubmit,
-        handleChange
+        resetForm,
+        isSubmitting,
+        error
     };
 };

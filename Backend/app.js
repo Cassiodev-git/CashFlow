@@ -1,5 +1,4 @@
 import './src/config/env.js'
-import router from './src/routes/index.js'
 import express from 'express'
 import './src/models/index.js'
 import { connection } from './src/config/database.js'
@@ -8,6 +7,7 @@ import transactionRoute from './src/routes/TransactionRouter.js'
 import categoryRoute from "./src/routes/CategoryRouter.js"
 import welcomeRoute from './src/routes/welcomeRoute.js'
 import { errorMiddleware } from './src/middlewares/erroMiddleware.js'
+import { runSeed} from "./src/database/seed.js"
 import cors from "cors"
 import rateLimit from "express-rate-limit"
 
@@ -77,6 +77,7 @@ async function startServer() {
     try {
         await connection.authenticate()
         await connection.sync({ force: false })
+        await runSeed()
 
         const PORT = process.env.PORT || 9000
 

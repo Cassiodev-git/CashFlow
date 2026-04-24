@@ -1,40 +1,36 @@
 import "../Transactions/Transactions.css";
 import { useState, useEffect } from "react";
 
-import { useData } from "../../hooks/useData";
-import { useCategory } from "../../hooks/useCategory";
-import { useTransaction } from "../../hooks/useTransaction";
+import { useTransactions } from "../../hooks/useTransactions";
+import { useCategories } from "../../hooks/useCategories";
 
 import { iconsMap } from "../../utils/iconsMap";
 import CategoryModal from "../../components/categoryModal/CategoryModal";
 
 const Transactions = () => {
 
-    const { user, reload } = useData();
-
     const {
-        updateTransaction,
-        deleteTransaction,
-        error,
-        loading
-    } = useTransaction();
+        transactions,
+        update,
+        remove,
+        isLoading,
+        updateError
+    } = useTransactions();
 
     const {
         categories,
-        loadingCategory,
-        error: categoryError,
-        createCategory,
-        loadCategorys,
-        deleteCategoryId
-    } = useCategory();
-
+        isLoading: isLoadingCategory,
+        create,
+        remove: removeCategory,
+        createError: categoryError,
+    } = useCategories();
 
     const [openForm, setOpenForm] = useState(false);
     const [openCategoryForm, setOpenCategoryForm] = useState(false);
 
     const [selectedTransaction, setSelectedTransaction] = useState(null);
     const [search, setSearch] = useState("");
-    const [categorySearch, setCategorySearch] = useState("")
+    const [categorySearch, setCategorySearch] = useState("");
 
     const [description, setDescription] = useState("");
     const [value, setValue] = useState("");
@@ -42,10 +38,8 @@ const Transactions = () => {
     const [categoryId, setCategory] = useState("");
     const [date, setDate] = useState("");
 
-
     const [categoryName, setCategoryName] = useState("");
     const [icon, setIcon] = useState("");
-
 
     useEffect(() => {
         if (!selectedTransaction) return;
@@ -54,9 +48,8 @@ const Transactions = () => {
         setValue(selectedTransaction.value);
         setType(selectedTransaction.type);
         setCategory(selectedTransaction.category_id);
-        setDate(selectedTransaction.date.split("T")[0]);
+        setDate(selectedTransaction.date?.split("T")[0] || "");
     }, [selectedTransaction]);
-
 
     const handleSubmit = async (e, id) => {
         e.preventDefault();
@@ -68,26 +61,37 @@ const Transactions = () => {
             CategoryId: categoryId,
             date
         };
+        try{
+            await update.mutateAsync({ id, data });
 
-        const res = await updateTransaction(id, data);
-
-        if (res) {
-            reload();
             setOpenForm(false);
-            setSelectedTransaction(null);
+            setSelectedTransaction(null)
+        }catch(err){
+
         }
     };
 
     const handleDelete = async (id) => {
-        await deleteTransaction(id);
-        reload();
-        setOpenForm(false);
-        setSelectedTransaction(null);
+        try{
+            await remove.mutateAsync(id);
+
+            setOpenForm(false);
+            setSelectedTransaction(null);
+        }catch(err){
+
+        }
     };
+
     const handleDeleteCategory = async (id) => {
-        await deleteCategoryId(id)
-        reload()
-    }
+        try{
+            await removeCategory.mutateAsync(id);
+            setOpenCategoryForm(false)
+            setCategoryName("")
+            setIcon("")
+        }catch(err){
+
+        }
+    };
 
     const handleCreateCategory = async (e) => {
         e.preventDefault();
@@ -96,16 +100,18 @@ const Transactions = () => {
             name: categoryName,
             icon
         };
+        try{
+            await create.mutateAsync(data);
 
-        await createCategory(data);
-        loadCategorys();
+            setOpenCategoryForm(false);
+            setCategoryName("");
+            setIcon("");
+        }catch(err){
 
-        setOpenCategoryForm(false);
-        setCategoryName("");
-        setIcon("");
+        }
     };
 
-    const filteredTransactions = user?.transactions?.filter((t) => {
+    const filteredTransactions = transactions?.filter((t) => {
         const text = search.toLowerCase();
 
         return (
@@ -115,12 +121,14 @@ const Transactions = () => {
             t.category?.name?.toLowerCase().includes(text)
         );
     });
-    const filteredCategories = categories.data?.filter((c) => {
+
+    const filteredCategories = categories?.data?.filter((c) => {
         const text = categorySearch.toLowerCase();
-        return (
-            c.name?.toLowerCase().includes(text)
-        );
+        return c.name?.toLowerCase().includes(text);
     });
+
+    if (isLoading) return <p>Carregando...</p>;
+
     return (
         <div className="dashboard-content">
 
@@ -168,7 +176,6 @@ const Transactions = () => {
 
                                         <div className="transacao-direita">
                                             <span className={`valor ${t.type}`}>
-                                                
                                                 {t.type === "income" ? "+" : "-"} R$ {t.value}
                                             </span>
                                         </div>
@@ -185,7 +192,6 @@ const Transactions = () => {
                     </div>
                 </div>
             </div>
-
 
             <div className="coluna-lateral">
                 <div className="categorias-card">
@@ -220,7 +226,10 @@ const Transactions = () => {
 
                                         <p className="categoria-nome">{c.name}</p>
 
-                                        <button className="btn-excluir" onClick={(e) => handleDeleteCategory(c.id)}>
+                                        <button
+                                            className="btn-excluir"
+                                            onClick={() => handleDeleteCategory(c.id)}
+                                        >
                                             Excluir
                                         </button>
                                     </div>
@@ -230,14 +239,12 @@ const Transactions = () => {
                             <p className="sem-categoria">
                                 {categorySearch
                                     ? "Nenhuma categoria encontrada"
-                                    : "Nenhuma categoria registrada"
-                                }
+                                    : "Nenhuma categoria registrada"}
                             </p>
                         )}
                     </div>
                 </div>
             </div>
-
 
             {openForm && selectedTransaction && (
                 <div className="form-overlay">
@@ -251,14 +258,12 @@ const Transactions = () => {
                                 type="text"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
-                                placeholder="Título"
                             />
 
                             <input
                                 type="number"
                                 value={value}
                                 onChange={(e) => setValue(e.target.value)}
-                                placeholder="Valor"
                             />
 
                             <select value={type} onChange={(e) => setType(e.target.value)}>
@@ -269,15 +274,15 @@ const Transactions = () => {
                             <select
                                 value={categoryId}
                                 onChange={(e) => setCategory(e.target.value)}
-                                disabled={loadingCategory}
+                                disabled={isLoadingCategory}
                             >
-                                <option value="">
-                                    {loadingCategory
+                                <option value="" disabled>
+                                    {isLoadingCategory
                                         ? "Carregando..."
                                         : "Selecione a categoria"}
                                 </option>
 
-                                {categories.data?.map((c) => (
+                                {categories?.data?.map((c) => (
                                     <option key={c.id} value={c.id}>
                                         {c.name}
                                     </option>
@@ -290,28 +295,24 @@ const Transactions = () => {
                                 onChange={(e) => setDate(e.target.value)}
                             />
 
-                            {error && <p className="form-error">{error}</p>}
-
+                            {updateError && (
+                                <p className="form-error">
+                                    {updateError?.response?.data?.message || "Erro ao criar categoria"}
+                                </p>
+                            )}
                             <div className="form-actions">
 
-                                <button type="submit" disabled={loading}>
-                                    {loading ? "Salvando..." : "Salvar"}
+                                <button type="submit" disabled={update.isPending}>
+                                    {update.isPending ? "Salvando..." : "Salvar"}
                                 </button>
 
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setOpenForm(false);
-                                        setSelectedTransaction(null);
-                                    }}
-                                >
+                                <button type="button" onClick={() => setOpenForm(false)}>
                                     Cancelar
                                 </button>
 
                                 <button
                                     type="button"
                                     className="btn-excluir-transacao"
-                                    disabled={loading}
                                     onClick={() => handleDelete(selectedTransaction.id)}
                                 >
                                     Excluir
@@ -322,6 +323,7 @@ const Transactions = () => {
                     </div>
                 </div>
             )}
+
             <CategoryModal
                 open={openCategoryForm}
                 onClose={() => {
@@ -337,6 +339,7 @@ const Transactions = () => {
                 iconsMap={iconsMap}
                 error={categoryError}
             />
+
         </div>
     );
 };

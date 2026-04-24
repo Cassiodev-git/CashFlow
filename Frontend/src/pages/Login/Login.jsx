@@ -35,13 +35,14 @@ const Login = () => {
                     <label>Senha:</label>
                     <input type="password" name="password" value={values.password} onChange={handleChange} placeholder="Digite sua senha" required />
                 </div>
-                {error && <p className="error">{error}</p>}
+                {error && <p className="error">{error.data?.message || "Erro ao cadastrar"}</p>}
                 <p className="register-link">
                     Não tem conta? <Link to="/register">Criar conta</Link>
                 </p>
                 <button type="submit" className="btn-login" disabled={loading}>
                     {loading ? "Entrando...":"Entrar"}
                 </button>
+                
                 </form>
             </div>
         </div>

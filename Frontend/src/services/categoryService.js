@@ -4,7 +4,7 @@ export const listCategorys = async () => {
     const res = await api.get("/categorys")
     return res
 }
-export const create = async (data) => {
+export const createCategory = async (data) => {
     const res = await api.post("/categorys", data)
     return res
 }

@@ -44,7 +44,7 @@
 
     margin-bottom:30px;
 
-    background:rgba(255,255,255,0.15);
+    background:var(--medium-bg);
 
     backdrop-filter:blur(14px);
     -webkit-backdrop-filter:blur(14px);
@@ -61,7 +61,7 @@
 .dashboard-title{
     font-size:28px;
     font-weight:600;
-    color:#4f5d73;
+    color:white;
 }
 
 
@@ -354,7 +354,7 @@
     box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
 }
 
-.form-actions {
+.form-container.form-actions {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
@@ -391,7 +391,9 @@
     background: rgba(0, 0, 0, 0.2);
     transform: translateY(-1px);
 }
-
+.form-container .form-error{
+    text-align: center;
+}
 
 .form-actions button:active {
     transform: scale(0.97);
@@ -405,7 +407,9 @@
 .transacao-icon {
     flex-shrink: 0;
 }
-
+.laoding{
+    text-align: center;
+}
 
 @media (max-width: 480px) {
     .form-container {

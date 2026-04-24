@@ -1,25 +1,21 @@
 import {
-    FaShoppingCart,
     FaUtensils,
     FaCar,
-    FaHome,
     FaHeartbeat,
-    FaMoneyBill,
     FaGamepad,
     FaGraduationCap,
-    FaPlane,
     FaFileInvoiceDollar
 } from "react-icons/fa";
 
 export const iconsMap = {
-    shopping: FaShoppingCart,      
-    food: FaUtensils,             
-    transport: FaCar,             
-    home: FaHome,                 
-    health: FaHeartbeat,          
-    salary: FaMoneyBill,         
-    leisure: FaGamepad,           
-    education: FaGraduationCap,   
-    travel: FaPlane,              
-    bills: FaFileInvoiceDollar    
+    utensils: FaUtensils,
+    car: FaCar,
+    heartbeat: FaHeartbeat,
+    gamepad: FaGamepad,
+    book: FaGraduationCap,
+    more: FaFileInvoiceDollar
+};
+
+export const getIcon = (iconName) => {
+    return iconsMap[iconName] || FaFileInvoiceDollar;
 };

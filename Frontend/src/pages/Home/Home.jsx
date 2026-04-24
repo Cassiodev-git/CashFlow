@@ -1,17 +1,22 @@
 import "../Home/Home.css";
 import Graph from "../../components/graph/graph";
-import { useData } from "../../hooks/useData";
-import { useTransaction } from "../../hooks/useTransaction";
-import { useCategory } from "../../hooks/useCategory";
+import { useTransactions } from "../../hooks/useTransactions";
+import { useCategories } from "../../hooks/useCategories";
 import { useState } from "react";
 import { iconsMap } from "../../utils/iconsMap";
 import { useSettings } from "../../contexts/SettingsContext";
 
 const Home = () => {
-    const { user, loading, error: dataError, sale, reload } = useData();
-    const { createTransaction, error: transactionError } = useTransaction();
-    const { categories, loadingCategory } = useCategory();
-    const { settings} = useSettings()
+    const {
+        transactions,
+        isLoading,
+        create,
+        sale,
+        createError
+    } = useTransactions();
+
+    const {categories, isLoading: isLoadingCategory  } = useCategories();
+    const { settings } = useSettings();
 
     const [openForm, setOpenForm] = useState(false);
 
@@ -19,7 +24,7 @@ const Home = () => {
     const [value, setValue] = useState("");
     const [type, setType] = useState("income");
     const [date, setDate] = useState("");
-    const [categoryId, setCategory] = useState("")
+    const [categoryId, setCategory] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,21 +37,16 @@ const Home = () => {
             date
         };
 
-        await createTransaction(data);
+        await create.mutateAsync(data);
+        setOpenForm(false)
 
         setDescript("");
         setValue("");
         setCategory("");
         setDate("");
-
-        reload();
     };
-    const teste = () =>{
-        console.log(settings)
-    }
 
-    if (loading) return <p>Carregando...</p>;
-    if (dataError) return <p>Erro: {dataError}</p>;
+    if (isLoading) return <p className="laoding">Carregando...</p>;
 
     return (
         <div className="main-content">
@@ -62,15 +62,20 @@ const Home = () => {
                         >
                             +
                         </button>
-                        <div className="perfil-avatar" onClick={teste}>C</div>
+
+                        <div className="perfil-avatar">
+                            C
+                        </div>
                     </div>
                 </div>
+
 
                 <div className="saldo-card">
                     <p className="saldo-header">Saldo Atual</p>
 
                     <h1 className="saldo-valor">
-                        {settings.currency} : {settings?.showBalance && sale?.sale || "*****"}
+                        {settings.currency} : {" "}
+                        {settings?.showBalance && sale?.sale || "****"}
                     </h1>
 
                     <div className="saldo-info">
@@ -118,15 +123,15 @@ const Home = () => {
                                 <select
                                     value={categoryId}
                                     onChange={(e) => setCategory(e.target.value)}
-                                    disabled={loadingCategory}
+                                    disabled={isLoadingCategory}
                                 >
                                     <option value="" disabled>
-                                        {loadingCategory
+                                        {isLoadingCategory
                                             ? "Carregando..."
                                             : "Selecione a categoria"}
                                     </option>
 
-                                    {categories.data.map((c) => (
+                                    {categories?.data?.map((c) => (
                                         <option key={c.id} value={c.id}>
                                             {c.name}
                                         </option>
@@ -139,14 +144,21 @@ const Home = () => {
                                     onChange={(e) => setDate(e.target.value)}
                                 />
 
-                                {transactionError && (
+                                {createError && (
                                     <p className="form-error">
-                                        {transactionError}
+                                        {createError.response?.data?.message || "Error ao cadastrar"}
                                     </p>
                                 )}
 
                                 <div className="form-actions">
-                                    <button type="submit">Salvar</button>
+                                    <button
+                                        type="submit"
+                                        disabled={create.isPending}
+                                    >
+                                        {create.isPending
+                                            ? "Salvando..."
+                                            : "Salvar"}
+                                    </button>
 
                                     <button
                                         type="button"
@@ -159,22 +171,24 @@ const Home = () => {
                         </div>
                     </div>
                 )}
+
                 <Graph
                     entries={sale?.entries}
                     said={sale?.said}
                 />
+
                 <div className="transacoes-card">
                     <h2 className="transacoes-header">
                         Últimas Transações
                     </h2>
 
                     <div className="transacoes-lista">
-                        {user?.transactions?.length > 0 ? (
-                            user.transactions.map((u) => {
-                                const Icon = iconsMap[u.category?.icon];
+                        {transactions?.length > 0 ? (
+                            transactions.map((t) => {
+                                const Icon = iconsMap[t.category?.icon];
 
                                 return (
-                                    <div className="transacao" key={u.id}>
+                                    <div className="transacao" key={t.id}>
                                         <div className="transacao-info">
                                             {Icon && (
                                                 <Icon
@@ -185,17 +199,19 @@ const Home = () => {
 
                                             <div>
                                                 <p className="titulo">
-                                                    {u.description}
+                                                    {t.description}
                                                 </p>
 
                                                 <span className="data">
-                                                    {new Date(u.date).toLocaleDateString(`pt-${settings.dateFormat}`)}
+                                                    {new Date(t.date).toLocaleDateString(
+                                                        `pt-${settings.dateFormat}`
+                                                    )}
                                                 </span>
                                             </div>
                                         </div>
 
-                                        <span className={u.type}>
-                                            {u.type === "income" ? "+" : "-"} R$ {u.value}
+                                        <span className={t.type}>
+                                            {t.type === "income" ? "+" : "-"} R$ {t.value}
                                         </span>
                                     </div>
                                 );

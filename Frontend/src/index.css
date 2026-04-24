@@ -1,13 +1,5 @@
 @import './variables.css';
 
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-
 html {
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
@@ -17,7 +9,7 @@ html {
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
-    background-color: var(--light-bg);
+    background-color: rgb(0, 0, 0);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -35,4 +27,5 @@ body.dark {
     --text-primary: var(--text-light);
     --text-secondary: var(--text-muted);
     --border-color: var(--medium-bg);
+    background-color: var(--dark-bg);
 }
