@@ -75,7 +75,7 @@ const Home = () => {
 
                     <h1 className="saldo-valor">
                         {settings.currency} : {" "}
-                        {settings?.showBalance && sale?.sale || "****"}
+                        {settings?.showBalance && sale?.sale || "*****"}
                     </h1>
 
                     <div className="saldo-info">
