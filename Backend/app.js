@@ -15,17 +15,24 @@ const app = express()
 
 app.use(express.json())
 
-app.use(cors({
-    origin: [
-        "http://localhost:5173",
-        "https://cash-flow-seven-sigma.vercel.app/"
-    ]
-}))
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://cash-flow-seven-sigma.vercel.app"
+];
 
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    }
+}));
 
 const strictLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 20,
+    max: 100,
     standardHeaders: true,
     legacyHeaders: false,
     handler: (req, res) => {

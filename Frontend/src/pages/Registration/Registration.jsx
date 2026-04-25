@@ -8,7 +8,7 @@ const Registration = () => {
     const navigate = useNavigate()
     const { success } = useToast()
 
-    const { values, handleChange, handleSubmit, loading, error } = useForm(
+    const { values, handleChange, handleSubmit, isSubmitting, error } = useForm(
     {
         name: "",
         email: "",
@@ -46,8 +46,8 @@ const Registration = () => {
                 <p className="register-link">
                     Você possui conta? <Link to="/">Fazer login</Link>
                 </p>
-                <button type="submit" className="btn-login" disabled={loading}>
-                    {loading ? "Cadastrando...":"Cadastrar"}
+                <button type="submit" className="btn-login" disabled={isSubmitting}>
+                    {isSubmitting ? "Cadastrando...":"Cadastrar"}
                 </button>
                 </form>
             </div>

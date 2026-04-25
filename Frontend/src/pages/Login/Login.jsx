@@ -8,7 +8,7 @@ const Login = () => {
     const navigate = useNavigate()
     const { success } = useToast()
 
-    const {values, handleChange, handleSubmit, loading, error} = useForm(
+    const {values, handleChange, handleSubmit, isSubmitting, error} = useForm(
         {
             email: "",
             password: ""
@@ -39,8 +39,8 @@ const Login = () => {
                 <p className="register-link">
                     Não tem conta? <Link to="/register">Criar conta</Link>
                 </p>
-                <button type="submit" className="btn-login" disabled={loading}>
-                    {loading ? "Entrando...":"Entrar"}
+                <button type="submit" className="btn-login" disabled={isSubmitting}>
+                    {isSubmitting ? "Entrando...":"Entrar"}
                 </button>
                 
                 </form>
