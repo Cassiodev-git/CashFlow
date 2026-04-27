@@ -198,7 +198,7 @@ A aplicação utiliza autenticação baseada em **JWT (JSON Web Token)**:
    ```bash
    # Backend
    cd Backend
-   cp .env.example .env   # Se existir, ou crie um novo
+   cp .env.example .env   
    # Edite .env com suas configurações:
    # DB_HOST=localhost
    # DB_USER=seu_usuario
